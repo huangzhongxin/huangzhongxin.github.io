@@ -95,12 +95,12 @@
 <meta property="og:site_name" content="鑫。">
 <meta property="og:description" content="浏览器的同源策略是一个用于隔离潜在恶意文件的重要安全机制，其限制了从同一个源加载的文档或脚本如何与来自另一个源的资源进行交互。本文介绍了同源策略的几个方面，以及如何避免。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/24/浏览器的同源策略/images/cors.png">
-<meta property="og:updated_time" content="2019-03-25T14:26:12.826Z">
+<meta property="og:image" content="http://hzxin.top/images/cors_http.png">
+<meta property="og:updated_time" content="2019-03-25T14:33:01.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器的同源策略">
 <meta name="twitter:description" content="浏览器的同源策略是一个用于隔离潜在恶意文件的重要安全机制，其限制了从同一个源加载的文档或脚本如何与来自另一个源的资源进行交互。本文介绍了同源策略的几个方面，以及如何避免。">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/24/浏览器的同源策略/images/cors.png">
+<meta name="twitter:image" content="http://hzxin.top/images/cors_http.png">
 
 
 
@@ -485,7 +485,7 @@
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">101</span> Switching Protocols</span><br><span class="line"><span class="attribute">Upgrade</span>: websocket</span><br><span class="line"><span class="attribute">Connection</span>: Upgrade</span><br><span class="line"><span class="attribute">Sec-WebSocket-Accept</span>: HSmrc0sMlYUkAGmm5OPpG2HaGWk=</span><br><span class="line"><span class="attribute">Sec-WebSocket-Protocol</span>: chat</span><br></pre></td></tr></table></figure>
 <h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>CORS全称Cross-Origin Resource Sharing，是HTML5规范定义的如何跨域访问资源，是跨源AJAX请求的根本解决方法。相比JSONP只能发<code>GET</code>请求，CORS允许任何类型的请求。</p>
 <p><code>Origin</code>表示本域，也就是浏览器当前页面的域。当JavaScript向外域（如<code>sina.com</code>）发起请求后，浏览器收到响应后，首先检查<code>Access-Control-Allow-Origin</code>是否包含本域，如果是，则此次跨域请求成功，如果不是，则请求失败，JavaScript将无法获取到响应的任何数据。    </p>
-<p>用一个图来表示就是：<br><img src="images/cors.png" alt></p>
+<p>用一个图来表示就是：<br><img src="//hzxin.top/images/cors_http.png" alt></p>
 <p>假设本域是<code>my.com</code>，外域是<code>sina.com</code>，只要响应头<code>Access-Control-Allow-Origin</code>为<code>http://my.com</code>，或者是<code>*</code>，本次请求就可以成功。</p>
 <p>可见，跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的<code>Access-Control-Allow-Origin</code>，决定权始终在对方手中。</p>
 <p>上面这种跨域请求，称之为“简单请求”。简单请求包括GET、HEAD和POST（POST的<code>Content-Type</code>类型仅限<code>application/x-www-form-urlencoded</code>、<code>multipart/form-data</code>和<code>text/plain</code>），并且不能出现任何自定义头（例如，<code>X-Custom: 12345</code>），通常能满足90%的需求。</p>
