@@ -350,8 +350,8 @@
         <p>浏览器的<strong>同源策略</strong>是一个用于隔离潜在恶意文件的重要安全机制，其限制了从同一个源加载的文档或脚本如何与来自另一个源的资源进行交互。<br>
 本文介绍了同源策略的几个方面，以及如何避免。</p>
 <a id="more"></a>
-<h1>概述</h1>
-<h2 id="什么是同源"><a class="header-anchor" href="#什么是同源">¶</a>什么是同源</h2>
+<h1 id="gai-shu">概述</h1>
+<h2 id="shi-yao-shi-tong-yuan"><a class="header-anchor" href="#什么是同源">¶</a>什么是同源</h2>
 <p>所谓的“同源”， 指的是“三个相同”，即：</p>
 <blockquote>
 <ul>
@@ -369,9 +369,9 @@
 <li><a href="https://www.a.com:8080/bbb/ccc.html" target="_blank" rel="noopener">https://www.a.com:8080/bbb/ccc.html</a> -&gt; 不同源，端口不同</li>
 </ul>
 </blockquote>
-<h2 id="同源的目的"><a class="header-anchor" href="#同源的目的">¶</a>同源的目的</h2>
+<h2 id="tong-yuan-de-mu-de"><a class="header-anchor" href="#同源的目的">¶</a>同源的目的</h2>
 <p>同源策略的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。</p>
-<h2 id="同源的限制范围"><a class="header-anchor" href="#同源的限制范围">¶</a>同源的限制范围</h2>
+<h2 id="tong-yuan-de-xian-zhi-fan-wei"><a class="header-anchor" href="#同源的限制范围">¶</a>同源的限制范围</h2>
 <p>目前，如果非同源，共有三种行为受到限制。</p>
 <blockquote>
 <ul>
@@ -381,7 +381,7 @@
 </ul>
 </blockquote>
 <p>以下将分别介绍如何避免这三个限制</p>
-<h1>Cookies</h1>
+<h1 id="cookies">Cookies</h1>
 <blockquote>
 <p>服务器写入浏览器的一小段信息，只有同源的网页才能共享。</p>
 </blockquote>
@@ -399,7 +399,7 @@
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Set-Cookie</span>: key=value; domain=.a.com; path=/</span><br></pre></td></tr></table></figure>
 <p>这样的话，二级域名和三级域名不用做任何设置，都可以读取这个Cookie。</p>
 <p>PS：如果两个网址，协议不同或端口不同，其Cookies可共享，即：Cookie共享跟协议、端口无关</p>
-<h1>跨域文档通信</h1>
+<h1 id="kua-yu-wen-dang-tong-xin">跨域文档通信</h1>
 <blockquote>
 <p>如果两个网页不同源，就无法拿到对方的<code>DOM</code>，也无法进行通信。典型的例子是<code>iframe</code>窗口和<code>window.open</code>方法打开的窗口，它们与父窗口无法通信。</p>
 </blockquote>
@@ -417,7 +417,7 @@
 <li>window.postMessage</li>
 </ul>
 </blockquote>
-<h2 id="片段识别符-fragment-identifier"><a class="header-anchor" href="#片段识别符-fragment-identifier">¶</a>片段识别符（fragment identifier）</h2>
+<h2 id="pian-duan-shi-bie-fu-fragment-identifier"><a class="header-anchor" href="#片段识别符-fragment-identifier">¶</a>片段识别符（fragment identifier）</h2>
 <blockquote>
 <p>片段标识符（fragment identifier）指的是，URL的<code>#</code>号后面的部分，比如<code>https://www.a.com/bbb/ccc.html#fragment</code>的<code>#fragment</code>。如果只是改变片段标识符，页面不会重新刷新。</p>
 </blockquote>
@@ -427,7 +427,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onhashchange = checkMessage;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkMessage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> message = <span class="built_in">window</span>.location.hash;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>同样的，子窗口也可以改变父窗口的片段标识符。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parent.location.href= target + <span class="string">"#"</span> + hash;</span><br></pre></td></tr></table></figure>
-<h2 id="window-name"><a class="header-anchor" href="#window-name">¶</a><a href="http://window.name" target="_blank" rel="noopener">window.name</a></h2>
+<h2 id="a-href-http-window-name-window-name-a"><a class="header-anchor" href="#window-name">¶</a><a href="http://window.name" target="_blank" rel="noopener">window.name</a></h2>
 <p>浏览器窗口有<code>window.name</code>属性。这个属性的最大特点是，只要当前的这个浏览器<code>tab</code>没有关闭，无论<code>tab</code>内的网页如何变动，这个<code>name</code>值都可以保持，并且<code>tab</code>内的每个网页都是可以接收和设置<code>window.name</code>这个值的。</p>
 <blockquote>
 <ul>
@@ -442,7 +442,7 @@
 <p>然后，主窗口就可以读取子窗口的<code>window.name</code>了。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主窗口中</span></span><br><span class="line"><span class="keyword">var</span> data = <span class="built_in">document</span>.getElementById(<span class="string">'myFrame'</span>).contentWindow.name;</span><br></pre></td></tr></table></figure>
 <p>这种方法的优点是，<code>window.name</code>容量很大，可以放置非常长的字符串；缺点是必须监听子窗口<code>window.name</code>属性的变化，影响网页性能。</p>
-<h2 id="window-postmessage"><a class="header-anchor" href="#window-postmessage">¶</a>window.postMessage</h2>
+<h2 id="window-post-message"><a class="header-anchor" href="#window-postmessage">¶</a>window.postMessage</h2>
 <blockquote>
 <p>在HTML5中，为了实现跨源通信，引入了一个全新的API：跨文档通信 API（Cross-document messaging）。<br>
 这个API为<code>window</code>对象新增了一个<code>window.postMessage</code>方法，允许跨窗口通信，不论这两个窗口是否同源。</p>
@@ -498,7 +498,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.origin !== <span class="string">'http://aaa.com'</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(e.data);</span><br><span class="line">  <span class="keyword">switch</span> (payload.method) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'set'</span>:</span><br><span class="line">      localStorage.setItem(payload.key, <span class="built_in">JSON</span>.stringify(payload.data));</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'get'</span>:</span><br><span class="line">      <span class="keyword">var</span> parent = <span class="built_in">window</span>.parent;</span><br><span class="line">      <span class="keyword">var</span> data = localStorage.getItem(payload.key);</span><br><span class="line">      parent.postMessage(data, <span class="string">'http://aaa.com'</span>);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'remove'</span>:</span><br><span class="line">      localStorage.removeItem(payload.key);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>加强版的父窗口发送消息代码如下</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> win = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'iframe'</span>)[<span class="number">0</span>].contentWindow;</span><br><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">name</span>: <span class="string">'Jack'</span> &#125;;</span><br><span class="line"><span class="comment">// 存入对象</span></span><br><span class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">'set'</span>, <span class="attr">data</span>: obj&#125;), <span class="string">'http://bbb.com'</span>);</span><br><span class="line"><span class="comment">// 读取对象</span></span><br><span class="line">win.postMessage(<span class="built_in">JSON</span>.stringify(&#123;<span class="attr">key</span>: <span class="string">'storage'</span>, <span class="attr">method</span>: <span class="string">'get'</span>&#125;), <span class="string">'http://bbb.com'</span>);</span><br><span class="line"><span class="built_in">window</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (e.origin != <span class="string">'http://bbb.com'</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="comment">// "Jack"</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(e.data).name);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1>AJAX</h1>
+<h1 id="ajax">AJAX</h1>
 <p>同源策略规定，AJAX请求只能发给同源的网址，否则就报错。<br>
 规避这个限制有以下几种方法：</p>
 <blockquote>
@@ -510,9 +510,9 @@
 <li>CORS</li>
 </ul>
 </blockquote>
-<h2 id="使用flash插件发送http请求"><a class="header-anchor" href="#使用flash插件发送http请求">¶</a>使用Flash插件发送HTTP请求</h2>
+<h2 id="shi-yong-flash-cha-jian-fa-song-http-qing-qiu"><a class="header-anchor" href="#使用flash插件发送http请求">¶</a>使用Flash插件发送HTTP请求</h2>
 <p>这种方式可以绕过浏览器的安全限制，但必须安装Flash，并且跟Flash交互。不过Flash用起来麻烦，而且现在用得也越来越少了。</p>
-<h2 id="架设服务器代理"><a class="header-anchor" href="#架设服务器代理">¶</a>架设服务器代理</h2>
+<h2 id="jia-she-fu-wu-qi-dai-li"><a class="header-anchor" href="#架设服务器代理">¶</a>架设服务器代理</h2>
 <p>在同源域名下架设一个代理服务器来转发，JavaScript负责把请求发送到代理服务器：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'/proxy?url=http://www.sina.com.cn'</span><br></pre></td></tr></table></figure>
 <p>代理服务器再把结果返回，这样就遵守了浏览器的同源策略。这种方式麻烦之处在于需要服务器端额外做开发。</p>
@@ -526,7 +526,7 @@
 <p>然后调用另一函数<code>getData()</code>触发：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPrice</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">    script.src = <span class="string">'http://api.a.com/?callback=foo'</span>; <span class="comment">// 注意，该请求的查询字符串有一个callback参数，用来指定回调函数的名字，这对于JSONP是必需的。一般参数名由API接口确定，常用为callback。</span></span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(script);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>由于<code>&lt;script&gt;</code>标签请求的脚本，直接作为代码运行。这时，只要浏览器定义了<code>foo</code>函数，该函数就会立即调用。作为参数的JSON数据被视为JavaScript对象，而不是字符串，因此避免了使用<code>JSON.parse</code>的步骤。</p>
-<h2 id="websocket"><a class="header-anchor" href="#websocket">¶</a>WebSocket</h2>
+<h2 id="web-socket"><a class="header-anchor" href="#websocket">¶</a>WebSocket</h2>
 <p>WebSocket是一种通信协议，使用<code>ws://</code>（非加密）和<code>wss://</code>（加密）作为协议前缀。该协议不实行同源策略，只要服务器支持，就可以通过它进行跨源通信。</p>
 <p>下面是一个例子，浏览器发出的WebSocket请求的头信息（摘自<a href="https://en.wikipedia.org/wiki/WebSocket" target="_blank" rel="noopener">维基百科</a>）。</p>
 <figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/chat</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Host</span>: server.example.com</span><br><span class="line"><span class="attribute">Upgrade</span>: websocket</span><br><span class="line"><span class="attribute">Connection</span>: Upgrade</span><br><span class="line"><span class="attribute">Sec-WebSocket-Key</span>: x3JJHMbDL1EzLkh9GBhXDw==</span><br><span class="line"><span class="attribute">Sec-WebSocket-Protocol</span>: chat, superchat</span><br><span class="line"><span class="attribute">Sec-WebSocket-Version</span>: 13</span><br><span class="line"><span class="attribute">Origin</span>: http://example.com</span><br></pre></td></tr></table></figure>
@@ -537,7 +537,7 @@
 <p>CORS全称Cross-Origin Resource Sharing，是HTML5规范定义的如何跨域访问资源，是跨源AJAX请求的根本解决方法。相比JSONP只能发<code>GET</code>请求，CORS允许任何类型的请求。</p>
 <p><code>Origin</code>表示本域，也就是浏览器当前页面的域。当JavaScript向外域（如<code>sina.com</code>）发起请求后，浏览器收到响应后，首先检查<code>Access-Control-Allow-Origin</code>是否包含本域，如果是，则此次跨域请求成功，如果不是，则请求失败，JavaScript将无法获取到响应的任何数据。</p>
 <p>详细的介绍，可以参考<a href="/2019/04/03/cors/">此文</a></p>
-<h1>参考</h1>
+<h1 id="can-kao">参考</h1>
 <p><a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="noopener">浏览器同源政策及其规避方法 - 阮一峰</a><br>
 <a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener">浏览器的同源策略 - MDN</a><br>
 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/postMessage" target="_blank" rel="noopener">window.postMessage - MDN</a><br>
@@ -703,7 +703,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是同源"><span class="nav-number">1.1.</span> <span class="nav-text">¶什么是同源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源的目的"><span class="nav-number">1.2.</span> <span class="nav-text">¶同源的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源的限制范围"><span class="nav-number">1.3.</span> <span class="nav-text">¶同源的限制范围</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">跨域文档通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#片段识别符-fragment-identifier"><span class="nav-number">3.1.</span> <span class="nav-text">¶片段识别符（fragment identifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-name"><span class="nav-number">3.2.</span> <span class="nav-text">¶window.name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-postmessage"><span class="nav-number">3.3.</span> <span class="nav-text">¶window.postMessage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">AJAX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用flash插件发送http请求"><span class="nav-number">4.1.</span> <span class="nav-text">¶使用Flash插件发送HTTP请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架设服务器代理"><span class="nav-number">4.2.</span> <span class="nav-text">¶架设服务器代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsonp"><span class="nav-number">4.3.</span> <span class="nav-text">¶JSONP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#websocket"><span class="nav-number">4.4.</span> <span class="nav-text">¶WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cors"><span class="nav-number">4.5.</span> <span class="nav-text">¶CORS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-tong-yuan"><span class="nav-number">1.1.</span> <span class="nav-text">¶什么是同源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tong-yuan-de-mu-de"><span class="nav-number">1.2.</span> <span class="nav-text">¶同源的目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tong-yuan-de-xian-zhi-fan-wei"><span class="nav-number">1.3.</span> <span class="nav-text">¶同源的限制范围</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookies"><span class="nav-number">2.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kua-yu-wen-dang-tong-xin"><span class="nav-number">3.</span> <span class="nav-text">跨域文档通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pian-duan-shi-bie-fu-fragment-identifier"><span class="nav-number">3.1.</span> <span class="nav-text">¶片段识别符（fragment identifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-href-http-window-name-window-name-a"><span class="nav-number">3.2.</span> <span class="nav-text">¶window.name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-post-message"><span class="nav-number">3.3.</span> <span class="nav-text">¶window.postMessage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ajax"><span class="nav-number">4.</span> <span class="nav-text">AJAX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-flash-cha-jian-fa-song-http-qing-qiu"><span class="nav-number">4.1.</span> <span class="nav-text">¶使用Flash插件发送HTTP请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jia-she-fu-wu-qi-dai-li"><span class="nav-number">4.2.</span> <span class="nav-text">¶架设服务器代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jsonp"><span class="nav-number">4.3.</span> <span class="nav-text">¶JSONP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-socket"><span class="nav-number">4.4.</span> <span class="nav-text">¶WebSocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cors"><span class="nav-number">4.5.</span> <span class="nav-text">¶CORS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

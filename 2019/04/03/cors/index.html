@@ -362,12 +362,12 @@
         <p><strong>CORS</strong>是一个W3C标准，全称是&quot;跨域资源共享&quot;（Cross-origin resource sharing）。它允许浏览器向跨域服务器，发出<code>XMLHttpRequest</code>请求，从而克服了AJAX只能同源使用的限制。<br>
 本文介绍了CORS的内部机制。</p>
 <a id="more"></a>
-<h1>简介</h1>
+<h1 id="jian-jie">简介</h1>
 <p>CORS需要浏览器和服务器同时支持。目前，主流浏览器都已基本提供对跨域资源共享的支持，移动端浏览器也几乎全部支持。<br>
 <img src="/2019/04/03/cors/support_browsers.png" alt="浏览器对CORS的支持情况"></p>
 <p>整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。</p>
 <p>因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
-<h1>什么情况下需要CORS？</h1>
+<h1 id="shi-yao-qing-kuang-xia-xu-yao-cors">什么情况下需要CORS？</h1>
 <blockquote>
 <ul>
 <li>由<code>XMLHttpRequest</code>或<code>Fetch</code>发起的跨域 HTTP 请求。</li>
@@ -378,7 +378,7 @@
 <p>例如，当你引用了某个第三方CDN上的字体文件时：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* CSS */</span></span><br><span class="line">@<span class="keyword">font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'FontAwesome'</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'http://cdn.com/fonts/fontawesome.ttf'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果该CDN服务商未正确设置<code>Access-Control-Allow-Origin</code>，那么浏览器无法加载字体资源。</p>
-<h1>两种请求</h1>
+<h1 id="liang-chong-qing-qiu">两种请求</h1>
 <p>浏览器将CORS请求分成两类：简单请求（simple request）和非简单请求（not-so-simple request）。</p>
 <p>若请求满足以下条件，则该请求属于简单请求：</p>
 <blockquote>
@@ -402,7 +402,7 @@
 </blockquote>
 <p>凡是不同时满足上面两个条件，就属于非简单请求。<br>
 浏览器对这两种请求的处理，是不一样的。</p>
-<h2 id="简单请求"><a class="header-anchor" href="#简单请求">¶</a>简单请求</h2>
+<h2 id="jian-dan-qing-qiu"><a class="header-anchor" href="#简单请求">¶</a>简单请求</h2>
 <p>对于简单请求，浏览器直接发出CORS请求。具体来说，就是在头信息之中，增加一个<code>Origin</code>字段。<br>
 我们首先发起一个跨域请求：<br>
 <img src="/2019/04/03/cors/request_cors_blocked.jpg" alt></p>
@@ -421,7 +421,7 @@
 <img src="/2019/04/03/cors/server_check_origin.jpg" alt><br>
 服务器对<code>Origin</code>字段判断后，返回了<code>403</code>，同样的请求得到了不同的响应结果（对比上图）：<br>
 <img src="/2019/04/03/cors/request_cors_blocked_3.jpg" alt></p>
-<h2 id="非简单请求"><a class="header-anchor" href="#非简单请求">¶</a>非简单请求</h2>
+<h2 id="fei-jian-dan-qing-qiu"><a class="header-anchor" href="#非简单请求">¶</a>非简单请求</h2>
 <p>对于非简单请求，浏览器并不会立即执行对应的请求代码，而是会先发送一个被称为<code>“预检”(Preflight)</code>的<code>OPTION</code>请求，用于询问要被跨域访问的服务器，是否允许当前域名下的页面发送跨域的请求。</p>
 <p>比如，使用下面的代码发起一个请求：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">'http://receiver.com/testNotSimpleReq.php'</span>;</span><br><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">'PUT'</span>, url, <span class="literal">true</span>);</span><br><span class="line">xhr.setRequestHeader(<span class="string">'X-Custom-Header'</span>, <span class="string">'value'</span>);</span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
@@ -450,7 +450,7 @@
 <img src="/2019/04/03/cors/preflight_response_no_method.jpg" alt></p>
 <p>如果顺利通过“预检”的话，浏览器则会真正发起请求：<br>
 <img src="/2019/04/03/cors/preflight_request_success.jpg" alt></p>
-<h1>Cookies与CORS</h1>
+<h1 id="cookies-yu-cors">Cookies与CORS</h1>
 <p>默认情况下，Cookie不包括在CORS请求之中。<br>
 如果服务器允许请求中包含Cookies，则需要在响应头部中加入字段</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Credentials: true</span><br></pre></td></tr></table></figure>
@@ -462,11 +462,11 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.withCredentials = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
 <p>需要注意的是，如果要发送Cookie，<code>Access-Control-Allow-Origin</code>就不能设为星号，必须指定明确的、与请求网页一致的域名。<br>
 同时，Cookie依然遵循同源策略，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且跨域的原网页代码中的<code>document.cookie</code>也无法读取服务器域名下的Cookie。</p>
-<h1>与JSONP的比较</h1>
+<h1 id="yu-jsonp-de-bi-jiao">与JSONP的比较</h1>
 <p>CORS与JSONP的使用目的相同，但是比JSONP更强大。</p>
 <p>JSONP只支持<code>GET</code>请求，CORS支持<code>所有类型</code>的HTTP请求。<br>
 JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。</p>
-<h1>参考</h1>
+<h1 id="can-kao">参考</h1>
 <p><a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener">跨域资源共享 CORS 详解 - 阮一峰</a><br>
 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">HTTP访问控制（CORS） - MDN</a><br>
 <a href="https://yq.aliyun.com/articles/69313" target="_blank" rel="noopener">CORS——跨域请求那些事儿</a></p>
@@ -636,7 +636,7 @@ JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">什么情况下需要CORS？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">两种请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单请求"><span class="nav-number">3.1.</span> <span class="nav-text">¶简单请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非简单请求"><span class="nav-number">3.2.</span> <span class="nav-text">¶非简单请求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Cookies与CORS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">与JSONP的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-jie"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-qing-kuang-xia-xu-yao-cors"><span class="nav-number">2.</span> <span class="nav-text">什么情况下需要CORS？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#liang-chong-qing-qiu"><span class="nav-number">3.</span> <span class="nav-text">两种请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jian-dan-qing-qiu"><span class="nav-number">3.1.</span> <span class="nav-text">¶简单请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fei-jian-dan-qing-qiu"><span class="nav-number">3.2.</span> <span class="nav-text">¶非简单请求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cookies-yu-cors"><span class="nav-number">4.</span> <span class="nav-text">Cookies与CORS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yu-jsonp-de-bi-jiao"><span class="nav-number">5.</span> <span class="nav-text">与JSONP的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
