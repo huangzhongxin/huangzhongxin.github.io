@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="鑫。">
 <meta property="og:description" content="题目链接：1017. Convert to Base -2  概述 这个题目要求很简单，就是实现一个十进制到负二进制的转换。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-14T10:39:56.484Z">
+<meta property="og:updated_time" content="2019-04-14T12:13:14.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode题解|1017. Convert to Base -2">
 <meta name="twitter:description" content="题目链接：1017. Convert to Base -2  概述 这个题目要求很简单，就是实现一个十进制到负二进制的转换。">
@@ -360,7 +360,11 @@
 第二步：2整除2，商为1，余0；<br>
 第三步：1整除2，商为0，余1；<br>
 由于到第三步时商已经等于0，故算法结束。所以，5<sub>10</sub>=101<sub>2</sub></p>
-<p>进一步，我们可以使用<code>位运算</code>来取余数或做除法，由于是二进制，所以一个数的最低位就是该数对二取余的结果，因此，在求余数的时候，我们只要使用<code>N &amp; 1</code>即可。完整的二进制转换代码如下：</p>
+<p>进一步，我们可以使用<code>位运算</code>来取余数或做除法。</p>
+<blockquote>
+<p>设X对Y求余，Y等于2<sup>N</sup>，公式为：X &amp; (2<sup>N</sup> - 1) 或 X&amp;(~Y)。</p>
+</blockquote>
+<p>因此，在求余数的时候，我们只要使用<code>N &amp; 1</code>即可。完整的二进制转换代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; N</span></span><br><span class="line"><span class="comment"> * @return &#123;string&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> base2 = <span class="function"><span class="keyword">function</span>(<span class="params">N</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(N == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> remainders = [];</span><br><span class="line">    <span class="keyword">while</span>(N != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> x = N &amp; <span class="number">1</span>;</span><br><span class="line">        remainders.push(x);</span><br><span class="line">        N = N &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> remainders.reverse().join(<span class="string">""</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>前面举的例子都是二进制的，那负二进制呢？类似的，我们在转换为负二进制时，只需要将除数改为<code>-2</code>即可。</p>
 <h1 id="shi-xian">实现</h1>
