@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="LeetCode,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -87,18 +87,13 @@
 
 
 
-<meta name="description" content="题目链接：687. Longest Univalue Path  概述 给定一棵二叉树，找出树中有相同值的最长路径长度。">
-<meta name="keywords" content="LeetCode">
-<meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode题解|687. Longest Univalue Path">
-<meta property="og:url" content="http://yoursite.com/2019/04/13/LeetCode题解-687-Longest-Univalue-Path/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="鑫。">
+<meta property="og:url" content="http://yoursite.com/tags/LeetCode/page/2/index.html">
 <meta property="og:site_name" content="鑫。">
-<meta property="og:description" content="题目链接：687. Longest Univalue Path  概述 给定一棵二叉树，找出树中有相同值的最长路径长度。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-14T10:39:24.421Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode题解|687. Longest Univalue Path">
-<meta name="twitter:description" content="题目链接：687. Longest Univalue Path  概述 给定一棵二叉树，找出树中有相同值的最长路径长度。">
+<meta name="twitter:title" content="鑫。">
 
 
 
@@ -126,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/13/LeetCode题解-687-Longest-Univalue-Path/">
+  <link rel="canonical" href="http://yoursite.com/tags/LeetCode/page/2/">
 
 
 
 
 
-  <title> LeetCode题解|687. Longest Univalue Path | 鑫。 </title>
+  <title> 标签: LeetCode | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,7 +152,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -262,167 +257,152 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/LeetCode题解-687-Longest-Univalue-Path/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="鑫。">
-    <meta itemprop="description" content>
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="鑫。">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="鑫。" src>
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                LeetCode题解|687. Longest Univalue Path
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-13T20:24:06+08:00">
-                2019-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <blockquote>
-<p>题目链接：<a href="https://leetcode.com/problems/longest-univalue-path/" target="_blank" rel="noopener">687. Longest Univalue Path</a></p>
-</blockquote>
-<h1 id="gai-shu">概述</h1>
-<p>给定一棵二叉树，找出树中有相同值的最长路径长度。</p>
-<a id="more"></a>
-<h1 id="si-lu">思路</h1>
-<p>使用<code>DFS</code>，找出每个节点的左右子树左右两边的最长路径值<code>lr</code>，如果当前节点与左(右)子树的节点值相等，则将当前节点的左(右)值定为左(右)子树<code>lr</code>中的最大值+1。</p>
-<h1 id="shi-xian">实现</h1>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;TreeNode&#125; root</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> longestUnivaluePath = <span class="function"><span class="keyword">function</span>(<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(root == <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> dfs = <span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span> || (node.left == <span class="literal">null</span> &amp;&amp; node.right == <span class="literal">null</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">left</span>: <span class="number">0</span>, <span class="attr">right</span>: <span class="number">0</span> &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> &#123; <span class="attr">left</span>: ll, <span class="attr">right</span>: lr &#125; = dfs(node.left);</span><br><span class="line">        <span class="keyword">const</span> &#123; <span class="attr">left</span>: rl, <span class="attr">right</span>: rr &#125; = dfs(node.right);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> left = <span class="number">0</span>,</span><br><span class="line">            right = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(node.left != <span class="literal">null</span> &amp;&amp; node.val == node.left.val)&#123;</span><br><span class="line">            left = <span class="built_in">Math</span>.max(ll, lr) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.right != <span class="literal">null</span> &amp;&amp; node.val == node.right.val)&#123;</span><br><span class="line">            right = <span class="built_in">Math</span>.max(rl, rr) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        maxLength = <span class="built_in">Math</span>.max(maxLength, left + right);</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">left</span>: left, <span class="attr">right</span>: right &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dfs(root);</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
-
-      
+  <div id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2>
+        LeetCode
+        <small>标签</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
         
-
-      
-    </div>
-
-    <div>
-      
+            <a class="post-title-link" href="/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/" itemprop="url">
+              
+                <span itemprop="name">LeetCode题解|3. Longest Substring Without Repeating Characters</span>
+              
+            </a>
         
+      </h1>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-13T18:52:20+08:00" content="2019-04-13">
+          04-13
+        </time>
+      </div>
 
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/13/LeetCode题解-143-Reorder-List/" rel="next" title="LeetCode题解|143. Reorder List">
-                <i class="fa fa-chevron-left"></i> LeetCode题解|143. Reorder List
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/14/LeetCode题解-86-Partition-List/" rel="prev" title="LeetCode题解|86. Partition List">
-                LeetCode题解|86. Partition List <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
+    
       
-    </div>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2019/04/13/LeetCode题解-971-Flip-Binary-Tree-To-Match-Preorder-Traversal/" itemprop="url">
+              
+                <span itemprop="name">LeetCode题解|971. Flip Binary Tree To Match Preorder Traversal</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-13T16:39:10+08:00" content="2019-04-13">
+          04-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2019/04/13/LeetCode题解-1017-Convert-to-Base-2/" itemprop="url">
+              
+                <span itemprop="name">LeetCode题解|1017. Convert to Base -2</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-13T16:14:33+08:00" content="2019-04-13">
+          04-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2019/04/13/LeetCode题解-380-Insert-Delete-GetRandom-O-1/" itemprop="url">
+              
+                <span itemprop="name">LeetCode题解|380. Insert Delete GetRandom O(1)</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-13T15:12:43+08:00" content="2019-04-13">
+          04-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2019/04/13/LeetCode题解集合/" itemprop="url">
+              
+                <span itemprop="name">LeetCode题解集合</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-13T15:11:45+08:00" content="2019-04-13">
+          04-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
   </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/tags/LeetCode/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/tags/LeetCode/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
           
           </div>
@@ -430,10 +410,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -453,17 +429,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="鑫。">
           <p class="site-author-name" itemprop="name">鑫。</p>
@@ -510,22 +477,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-lu"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-xian"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
@@ -625,10 +576,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 

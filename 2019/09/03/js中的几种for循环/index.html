@@ -1,0 +1,865 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="javascript,ES6,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="在JS刚出来的时候，想要遍历一个数组，可以像下面这样： 123for (var i = 0; i &amp;lt; array.length; i++) &amp;#123;  conosole.log(array[i])&amp;#125;">
+<meta name="keywords" content="javascript,ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的几种for循环">
+<meta property="og:url" content="http://yoursite.com/2019/09/03/js中的几种for循环/index.html">
+<meta property="og:site_name" content="鑫。">
+<meta property="og:description" content="在JS刚出来的时候，想要遍历一个数组，可以像下面这样： 123for (var i = 0; i &amp;lt; array.length; i++) &amp;#123;  conosole.log(array[i])&amp;#125;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-08T01:40:27.860Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js中的几种for循环">
+<meta name="twitter:description" content="在JS刚出来的时候，想要遍历一个数组，可以像下面这样： 123for (var i = 0; i &amp;lt; array.length; i++) &amp;#123;  conosole.log(array[i])&amp;#125;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/03/js中的几种for循环/">
+
+
+
+
+
+  <title> js中的几种for循环 | 鑫。 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">鑫。</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/js中的几种for循环/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="鑫。">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="鑫。">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="鑫。" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                js中的几种for循环
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-03T21:19:41+08:00">
+                2019-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在JS刚出来的时候，想要遍历一个数组，可以像下面这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">  conosole.log(array[i])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="for-each">forEach</h1>
+<p>在ES5之后，新加了一个<code>forEach</code>方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>forEach</code>的写法比原来的<code>for</code>循环简洁，但是在其内部，却不能使用<code>break</code>和<code>return</code>结束循环以及<code>continue</code>跳过循环，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(item === <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">		<span class="comment">// 使用 break 及 continue 均会报错</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(item) <span class="comment">// 1 3</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="for-in">for…in</h1>
+<p>ES5中，还有一个<code>for...in</code>循环，其用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> array) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(array[index])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，<code>for...in</code>有以下几个特点：</p>
+<ol>
+<li>枚举的索引<code>index</code>是字符型，不能直接进行数字运算，如：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sum = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) &#123;</span><br><span class="line">  sum += index</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sum) <span class="comment">// '0012', 而不是 3</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>会将原型对象也一起枚举出来，如：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.objCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;; </span><br><span class="line"><span class="built_in">Array</span>.prototype.arrCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line">arr.foo = <span class="string">'bar'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// foo</span></span><br><span class="line"><span class="comment">// arrCustom</span></span><br><span class="line"><span class="comment">// objCustom</span></span><br></pre></td></tr></table></figure>
+<p>如果不想枚举出原型对象，可以配合使用<code>hasOwnProperty</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.objCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;; </span><br><span class="line"><span class="built_in">Array</span>.prototype.arrCustom = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>];</span><br><span class="line">arr.foo = <span class="string">'bar'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> arr) &#123;</span><br><span class="line">  <span class="keyword">if</span> (arr.hasOwnProperty(i)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// foo</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>循环出来的属性顺序如下：先遍历出整数属性（integer properties，按照升序），然后其他属性按照创建时候的顺序遍历出来。</li>
+</ol>
+<blockquote>
+<p>整数属性满足 <code>String(Math.trunc(Number(prop)) === prop</code><br>
+如<br>
+&quot;49&quot; 是整数属性，因为 <code>String(Math.trunc(Number('49'))</code> 的结果还是 “49”。<br>
+&quot;+49&quot; 不是整数属性，因为 <code>String(Math.trunc(Number('+49'))</code> 的结果是 “49”，不是 “+49”。<br>
+“1.2” 不是整数属性，因为 <code>String(Math.trunc(Number('1.2'))</code> 的结果是 “1”，不是 “1.2”。</p>
+</blockquote>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> codes = &#123;</span><br><span class="line">  <span class="string">"49"</span>: <span class="string">"Germany"</span>,</span><br><span class="line">  <span class="string">"41"</span>: <span class="string">"Switzerland"</span>,</span><br><span class="line">  <span class="string">"44"</span>: <span class="string">"Great Britain"</span>,</span><br><span class="line">  <span class="string">"1"</span>: <span class="string">"USA"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> code <span class="keyword">in</span> codes) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(code)  <span class="comment">// 1, 41, 44, 49</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="for-of">for…of</h1>
+<p>在ES6中，新加了一个<code>for...of</code>循环，其用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> array) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与前面几种方式比较，<code>for...of</code>是循环数组元素最简洁的方法，避免了<code>for...in</code>的几个不足，同时也能够使用<code>return</code>、<code>break</code>、<code>continue</code></p>
+<p><code>for...of</code>能够使用的范围包括了数组、<code>Set</code>、<code>Map</code>、字符串、类数组对象（如<code>arguments</code>、<code>DOM NodeList</code>对象）、 <code>Generator</code>对象。</p>
+<h2 id="shu-zu"><a class="header-anchor" href="#数组">¶</a>数组</h2>
+<p><code>for...of</code>能够直接使用在数组上，其遍历得到的是键值，而不像<code>for...in</code>一样得到的是键名：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(index) <span class="comment">// 0 1 2 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value) <span class="comment">// a b c d</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同时，<code>for...of</code>只会遍历数组的数字索引的属性，而<code>for...in</code>会遍历所有属性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line">arr.foo = <span class="string">'bar'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(index) <span class="comment">// "0", "1", "2", "foo"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> value <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value) <span class="comment">//  "3", "5", "7"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="set-map"><a class="header-anchor" href="#set-map">¶</a>Set、Map</h2>
+<p>Set、Map在使用<code>for...of</code>进行遍历的时候，顺序是<strong>按照各个成员添加到数据结构中的顺序</strong>。另外，Set 遍历时，返回的是一个值，而 Map 遍历时，返回的是一个数组，该数组的两个成员分别为当前 Map 成员的键名和键值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> engines = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="string">"Gecko"</span>, <span class="string">"Trident"</span>, <span class="string">"Webkit"</span>, <span class="string">"Webkit"</span>])</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">of</span> engines) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Gecko</span></span><br><span class="line"><span class="comment">// Trident</span></span><br><span class="line"><span class="comment">// Webkit</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> es6 = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">es6.set(<span class="string">"edition"</span>, <span class="number">6</span>)</span><br><span class="line">es6.set(<span class="string">"committee"</span>, <span class="string">"TC39"</span>)</span><br><span class="line">es6.set(<span class="string">"standard"</span>, <span class="string">"ECMA-262"</span>)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> [name, value] <span class="keyword">of</span> es6) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(name + <span class="string">": "</span> + value)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// edition: 6</span></span><br><span class="line"><span class="comment">// committee: TC39</span></span><br><span class="line"><span class="comment">// standard: ECMA-262</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> pair <span class="keyword">of</span> es6) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(pair)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ['edition', 6]</span></span><br><span class="line"><span class="comment">// ['committee', TC39]</span></span><br><span class="line"><span class="comment">// ['standard', ECMA-262]</span></span><br></pre></td></tr></table></figure>
+<h2 id="zi-fu-chuan"><a class="header-anchor" href="#字符串">¶</a>字符串</h2>
+<p>在使用<code>for...of</code>遍历字符串时，还能够正确的识别Unicode编码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> chr <span class="keyword">of</span> <span class="string">"😺😲"</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(chr) <span class="comment">// 😺, 😲</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> chr <span class="keyword">in</span> <span class="string">"😺😲"</span>) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(chr) <span class="comment">// '0', '1', '2', '3'   &lt;--- 将2个Unicode字符识别成了4个字符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="lei-shu-zu-dui-xiang"><a class="header-anchor" href="#类数组对象">¶</a>类数组对象</h2>
+<p>类数组对象的遍历方法也和数组一样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DOM NodeList对象</span></span><br><span class="line"><span class="keyword">let</span> paras = <span class="built_in">document</span>.querySelectorAll(<span class="string">"p"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> p <span class="keyword">of</span> paras) &#123;</span><br><span class="line">  p.classList.add(<span class="string">"test"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// arguments对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printArgs</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> x <span class="keyword">of</span> <span class="built_in">arguments</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">printArgs(<span class="string">'a'</span>, <span class="string">'b'</span>);</span><br><span class="line"><span class="comment">// 'a'</span></span><br><span class="line"><span class="comment">// 'b'</span></span><br></pre></td></tr></table></figure>
+<h2 id="pu-tong-dui-xiang"><a class="header-anchor" href="#普通对象">¶</a>普通对象</h2>
+<p><code>for...of</code>并不能像<code>for...in</code>一样直接遍历普通对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> es6 = &#123;</span><br><span class="line">  edition: <span class="number">6</span>,</span><br><span class="line">  committee: <span class="string">"TC39"</span>,</span><br><span class="line">  standard: <span class="string">"ECMA-262"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">in</span> es6) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// edition</span></span><br><span class="line"><span class="comment">// committee</span></span><br><span class="line"><span class="comment">// standard</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">of</span> es6) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// TypeError: es6 is not iterable</span></span><br></pre></td></tr></table></figure>
+<p>解决方法有两种，一是使用<code>Object.entries</code>/<code>Object.keys</code>/<code>Object.values</code>方法由普通对象生成键值对/键名/键值数组，然后遍历这个数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> es6 = &#123;</span><br><span class="line">  edition: <span class="number">6</span>,</span><br><span class="line">  committee: <span class="string">"TC39"</span>,</span><br><span class="line">  standard: <span class="string">"ECMA-262"</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">of</span> <span class="built_in">Object</span>.entries(es6)) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ["edition", 6]</span></span><br><span class="line"><span class="comment">// ["committee", "TC39"]</span></span><br><span class="line"><span class="comment">// ["standard", "ECMA-262"]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">of</span> <span class="built_in">Object</span>.keys(es6)) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e + <span class="string">': '</span> + es6[e])</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// edition: 6</span></span><br><span class="line"><span class="comment">// committee: TC39</span></span><br><span class="line"><span class="comment">// standard: ECMA-262</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> e <span class="keyword">of</span> <span class="built_in">Object</span>.values(es6)) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 6</span></span><br><span class="line"><span class="comment">// TC39</span></span><br><span class="line"><span class="comment">// ECMA-262</span></span><br></pre></td></tr></table></figure>
+<p>另一种是使用<code>Generator</code>函数将对象包装一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">entries</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">of</span> <span class="built_in">Object</span>.keys(obj)) &#123;</span><br><span class="line">    <span class="keyword">yield</span> [key, obj[key]];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [key, value] <span class="keyword">of</span> entries(obj)) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(key, <span class="string">'-&gt;'</span>, value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// a -&gt; 1</span></span><br><span class="line"><span class="comment">// b -&gt; 2</span></span><br><span class="line"><span class="comment">// c -&gt; 3</span></span><br></pre></td></tr></table></figure>
+<h1 id="can-kao">参考</h1>
+<ol>
+<li><a href="https://hacks.mozilla.org/2015/04/es6-in-depth-iterators-and-the-for-of-loop/" target="_blank" rel="noopener">ES6 In Depth: Iterators and the for-of loop</a></li>
+<li><a href="http://es6.ruanyifeng.com/#docs/iterator#for---of-%E5%BE%AA%E7%8E%AF" target="_blank" rel="noopener">Iterator 和 for…of 循环</a></li>
+<li><a href="http://javascript.info/object#the-for-in-loop" target="_blank" rel="noopener">http://javascript.info/object#the-for-in-loop</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/02/arts-week-1/" rel="next" title="arts-week-1">
+                <i class="fa fa-chevron-left"></i> arts-week-1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/08/LeetCode题解-26-删除排序数组中的重复项/" rel="prev" title="LeetCode题解|26. 删除排序数组中的重复项">
+                LeetCode题解|26. 删除排序数组中的重复项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="鑫。">
+          <p class="site-author-name" itemprop="name">鑫。</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#for-each"><span class="nav-number">1.</span> <span class="nav-text">forEach</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for-in"><span class="nav-number">2.</span> <span class="nav-text">for…in</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for-of"><span class="nav-number">3.</span> <span class="nav-text">for…of</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu"><span class="nav-number">3.1.</span> <span class="nav-text">¶数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-map"><span class="nav-number">3.2.</span> <span class="nav-text">¶Set、Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zi-fu-chuan"><span class="nav-number">3.3.</span> <span class="nav-text">¶字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lei-shu-zu-dui-xiang"><span class="nav-number">3.4.</span> <span class="nav-text">¶类数组对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pu-tong-dui-xiang"><span class="nav-number">3.5.</span> <span class="nav-text">¶普通对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鑫。</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
