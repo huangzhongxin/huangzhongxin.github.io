@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="鑫。">
 <meta property="og:description" content="本文介绍了如何使用webpack解析ES6、JSX、CSS等资源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-17T11:39:34.047Z">
+<meta property="og:updated_time" content="2019-11-17T12:56:24.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用webpack解析一些常见资源">
 <meta name="twitter:description" content="本文介绍了如何使用webpack解析ES6、JSX、CSS等资源">
@@ -385,8 +385,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i style-loader css-loader -D</span><br></pre></td></tr></table></figure>
 <h1 id="jie-xi-less-sass">解析Less、Sass</h1>
 <p>Less和Sass的解析步骤与CSS类似，只需要多一步将Less/Sass转换为CSS即可。<br>
-配置如下：<br>
-webpack.config.js</p>
+配置如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">                use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'less-loader'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.s[ac]ss$/</span>, <span class="comment">// sass和scss文件</span></span><br><span class="line">                use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'sass-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意，<code>less-loader</code>需要一同安装<code>less</code>；<code>sass-loader</code>需要一同安装<code>node-sass</code></p>
 <h1 id="jie-xi-tu-pian-zi-ti-deng">解析图片、字体等</h1>
