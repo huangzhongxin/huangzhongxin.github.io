@@ -96,7 +96,7 @@
 <meta property="og:description" content="什么是webpack webpack本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助我们把多个模块的代码打包。下面是webpack官网给的一个说明图。  如上图，webpack 会把项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件（如.js、.css等）。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/11/17/webpack的几个核心概念/introduction.png">
-<meta property="og:updated_time" content="2019-11-17T06:46:38.333Z">
+<meta property="og:updated_time" content="2019-11-17T06:49:43.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack的几个核心概念">
 <meta name="twitter:description" content="什么是webpack webpack本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助我们把多个模块的代码打包。下面是webpack官网给的一个说明图。  如上图，webpack 会把项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件（如.js、.css等）。">
@@ -489,8 +489,7 @@
 生成的路径会进行规范化，并且删除末尾的斜杠，除非路径是根目录。<br>
 空字符串的 path 片段会被忽略。<br>
 如果没有指定 path，则返回当前工作目录的绝对路径。<br>
-nodejs 内置的path模块　并在它前面加上 <code>__dirname</code>这个全局变量。可以防止不同操作系统之间的文件路径问题，并且可以使相对路径按照预期工作。<br>
-Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路径，所以当你在 /d1/d2/myscript.js 文件中写了 <code>__dirname</code>， 它的值就是 /d1/d2 。</p>
+Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路径，所以当在 /d1/d2/myscript.js 文件中写了 <code>__dirname</code>， 它的值就是 /d1/d2 。</p>
 
       
     </div>
