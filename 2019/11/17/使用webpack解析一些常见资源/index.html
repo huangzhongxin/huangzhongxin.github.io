@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="LeetCode,">
+  <meta name="keywords" content="webpack,">
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
-<meta name="keywords" content="LeetCode">
+<meta name="description" content="本文介绍了如何使用webpack解析ES6、JSX、CSS等资源">
+<meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode题解|3. Longest Substring Without Repeating Characters">
-<meta property="og:url" content="http://yoursite.com/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/index.html">
+<meta property="og:title" content="使用webpack解析一些常见资源">
+<meta property="og:url" content="http://yoursite.com/2019/11/17/使用webpack解析一些常见资源/index.html">
 <meta property="og:site_name" content="鑫。">
-<meta property="og:description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
+<meta property="og:description" content="本文介绍了如何使用webpack解析ES6、JSX、CSS等资源">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-14T10:39:26.241Z">
+<meta property="og:updated_time" content="2019-11-17T11:39:34.047Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode题解|3. Longest Substring Without Repeating Characters">
-<meta name="twitter:description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
+<meta name="twitter:title" content="使用webpack解析一些常见资源">
+<meta name="twitter:description" content="本文介绍了如何使用webpack解析ES6、JSX、CSS等资源">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/">
+  <link rel="canonical" href="http://yoursite.com/2019/11/17/使用webpack解析一些常见资源/">
 
 
 
 
 
-  <title> LeetCode题解|3. Longest Substring Without Repeating Characters | 鑫。 </title>
+  <title> 使用webpack解析一些常见资源 | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/17/使用webpack解析一些常见资源/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="鑫。">
@@ -296,7 +296,7 @@
             
             
               
-                LeetCode题解|3. Longest Substring Without Repeating Characters
+                使用webpack解析一些常见资源
               
             
           </h1>
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-13T18:52:20+08:00">
-                2019-04-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-17T14:54:13+08:00">
+                2019-11-17
               </time>
             
 
@@ -347,20 +347,53 @@
       
 
       
-        <blockquote>
-<p>题目链接：<a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. Longest Substring Without Repeating Characters</a></p>
-</blockquote>
-<h1 id="gai-shu">概述</h1>
-<p>这个题目给定一个字符串<code>s</code>，找出其中不含有重复字符的<code>最长子串</code>的长度。</p>
+        <p>本文介绍了如何使用webpack解析ES6、JSX、CSS等资源</p>
 <a id="more"></a>
-<h1 id="si-lu">思路</h1>
-<p>该题目可使用 <a href="https://www.zhihu.com/question/314669016" target="_blank" rel="noopener">滑动窗口</a> 来做。</p>
-<p>具体来说，使用两个指针<code>left</code>、<code>right</code>来确定出一个子串的范围，如果<code>s[right]</code>已经在<code>s[left...right-1]</code>中出现过，则将<code>left</code>向右挪，反之则将<code>right</code>向右挪，直到<code>right</code>到达<code>s</code>结尾。</p>
-<p>通过这样对<code>s</code>进行一次扫描，即可得到最长子串。</p>
-<h1 id="shi-xian">实现</h1>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> left = <span class="number">0</span>,</span><br><span class="line">        right = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(right &lt;= s.length)&#123;</span><br><span class="line">        <span class="keyword">if</span>(maxLength &lt; right - left)&#123;</span><br><span class="line">            maxLength = right - left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s.substring(left, right).indexOf(s[right]) != <span class="number">-1</span>)&#123;</span><br><span class="line">            left++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
-
+<h1 id="jie-xi-es-6">解析ES6</h1>
+<p>解析es6需要使用到<code>babel</code>，同时需要使用<code>babel-loader</code><br>
+首先，先配置<code>babel</code>配置文件<code>.babelrc</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// .babelrc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"presets"</span>: [</span><br><span class="line">        <span class="string">"@babel/preset-env"</span>  // 增加ES6的babel preset配置</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"plugins"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>.babelrc</code>文件中的<code>plugins</code>字段，可以理解为一个plugin对应一个功能，<br>
+而<code>presets</code>则是多个plugin的集合</p>
+</blockquote>
+<p>接着需要在<code>webpack.config.js</code>中增加相关loader的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                use: <span class="string">'babel-loader'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后安装相关依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @babel/core @babel/preset-env babel-loader -D</span><br></pre></td></tr></table></figure>
+<p>安装完毕重新编译下即可。</p>
+<h1 id="jie-xi-react-jsx">解析React JSX</h1>
+<p>首先，先配置<code>babel</code>配置文件<code>.babelrc</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// .babelrc</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"presets"</span>: [</span><br><span class="line">        <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">        <span class="string">"@babel/preset-react"</span> // 增加react jsx的babel preset配置</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"plugins"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着在<code>webpack.config.js</code>中修改<code>babel-loader</code>的校验规则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.jsx?$/</span>,  <span class="comment">// js、jsx文件</span></span><br><span class="line">                use: <span class="string">'babel-loader'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后安装相关依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i @babel/preset-react -D</span><br></pre></td></tr></table></figure>
+<p>安装完毕即可使用react的jsx相关语法。</p>
+<h1 id="jie-xi-css">解析CSS</h1>
+<p>解析CSS需要用到两个loader：</p>
+<ol>
+<li><code>css-loader</code>加载css文件，并转换为commonJS对象</li>
+<li><code>style-loader</code>将样式通过<code>&lt;style&gt;</code>标签插入到head中</li>
+</ol>
+<p>在<code>webpack.config.js</code>中修改loader配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，loaders链式调用，<code>从右到左</code>，所以先写style-loader，再写css-loader</p>
+</blockquote>
+<p>然后安装相关依赖：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i style-loader css-loader -D</span><br></pre></td></tr></table></figure>
+<h1 id="jie-xi-less-sass">解析Less、Sass</h1>
+<p>Less和Sass的解析步骤与CSS类似，只需要多一步将Less/Sass转换为CSS即可。<br>
+配置如下：<br>
+webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">                use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'less-loader'</span>]</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.s[ac]ss$/</span>, <span class="comment">// sass和scss文件</span></span><br><span class="line">                use: [<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>, <span class="string">'sass-loader'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，<code>less-loader</code>需要一同安装<code>less</code>；<code>sass-loader</code>需要一同安装<code>node-sass</code></p>
+<h1 id="jie-xi-tu-pian-zi-ti-deng">解析图片、字体等</h1>
+<p>解析图片、字体等文件，可使用<code>file-loader</code>或<code>url-loader</code>。<br>
+<code>url-loader</code>底层也是调用的<code>file-loader</code>。<br>
+在使用上，<code>url-loader</code>可以将小资源以Base64的方式编码到文件中，减少文件数，使用方法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.(png|jpg|ttf)$/</span>,</span><br><span class="line">                use: [&#123;</span><br><span class="line">                    loader: <span class="string">'url-loader'</span>,</span><br><span class="line">                    options: &#123;</span><br><span class="line">                        limit: <span class="number">10240</span> <span class="comment">// = 10KB</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -383,7 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
           
         </div>
       
@@ -396,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/13/LeetCode题解-971-Flip-Binary-Tree-To-Match-Preorder-Traversal/" rel="next" title="LeetCode题解|971. Flip Binary Tree To Match Preorder Traversal">
-                <i class="fa fa-chevron-left"></i> LeetCode题解|971. Flip Binary Tree To Match Preorder Traversal
+              <a href="/2019/11/17/webpack的几个核心概念/" rel="next" title="webpack的几个核心概念">
+                <i class="fa fa-chevron-left"></i> webpack的几个核心概念
               </a>
             
           </div>
@@ -405,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/13/LeetCode题解-143-Reorder-List/" rel="prev" title="LeetCode题解|143. Reorder List">
-                LeetCode题解|143. Reorder List <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -522,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-lu"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-xian"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jie-xi-es-6"><span class="nav-number">1.</span> <span class="nav-text">解析ES6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jie-xi-react-jsx"><span class="nav-number">2.</span> <span class="nav-text">解析React JSX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jie-xi-css"><span class="nav-number">3.</span> <span class="nav-text">解析CSS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jie-xi-less-sass"><span class="nav-number">4.</span> <span class="nav-text">解析Less、Sass</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jie-xi-tu-pian-zi-ti-deng"><span class="nav-number">5.</span> <span class="nav-text">解析图片、字体等</span></a></li></ol></div>
             
 
           </div>
