@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="webpacck,">
 
 
 
@@ -87,13 +87,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鑫。">
-<meta property="og:url" content="http://yoursite.com/archives/2019/11/index.html">
+<meta name="description" content="本文介绍了webpack中的Tree Shaking相关内容。">
+<meta name="keywords" content="webpacck">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack中的Tree Shaking">
+<meta property="og:url" content="http://yoursite.com/2019/12/16/webpack中的TreeShaking/index.html">
 <meta property="og:site_name" content="鑫。">
+<meta property="og:description" content="本文介绍了webpack中的Tree Shaking相关内容。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/12/16/webpack中的TreeShaking/before.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/16/webpack中的TreeShaking/after.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/16/webpack中的TreeShaking/use-a.png">
+<meta property="og:updated_time" content="2019-12-16T11:36:45.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鑫。">
+<meta name="twitter:title" content="webpack中的Tree Shaking">
+<meta name="twitter:description" content="本文介绍了webpack中的Tree Shaking相关内容。">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/16/webpack中的TreeShaking/before.png">
 
 
 
@@ -121,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2019/11/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/16/webpack中的TreeShaking/">
 
 
 
 
 
-  <title> 归档 | 鑫。 </title>
+  <title> webpack中的Tree Shaking | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -152,7 +161,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,239 +266,181 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 27 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2019">2019</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/29/webpack中的一些常用配置【一】/" itemprop="url">
-              
-                <span itemprop="name">webpack中的一些常用配置【一】</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-29T09:35:03+08:00" content="2019-11-29">
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/26/webpack中的代码压缩/" itemprop="url">
-              
-                <span itemprop="name">webpack中的代码压缩</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-26T14:42:33+08:00" content="2019-11-26">
-          11-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/23/webpack中的文件指纹-hash-chunkhash-contenthash/" itemprop="url">
-              
-                <span itemprop="name">webpack中的文件指纹:hash/chunkhash/contenthash</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-23T16:42:58+08:00" content="2019-11-23">
-          11-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/18/webpack中的文件监听及热更新/" itemprop="url">
-              
-                <span itemprop="name">webpack中的文件监听及热更新</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-18T16:46:14+08:00" content="2019-11-18">
-          11-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/17/使用webpack解析一些常见资源/" itemprop="url">
-              
-                <span itemprop="name">使用webpack解析一些常见资源</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-17T14:54:13+08:00" content="2019-11-17">
-          11-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2019/11/17/webpack的几个核心概念/" itemprop="url">
-              
-                <span itemprop="name">webpack的几个核心概念</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-11-17T10:19:33+08:00" content="2019-11-17">
-          11-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/16/webpack中的TreeShaking/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="鑫。">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="鑫。">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="鑫。" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                webpack中的Tree Shaking
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-16T09:39:53+08:00">
+                2019-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文介绍了webpack中的Tree Shaking相关内容。</p>
+<a id="more"></a>
+<h1 id="shi-yao-shi-tree-shaking">什么是Tree Shaking</h1>
+<p>1 个模块可能有多个方法，只要其中的某个方法使用到了，则整个文件都会被打到 <code>bundle</code> 里面去，tree shaking 就是<code>只把用到的方法</code>打入 bundle ，没用到的方法会在 <code>uglify</code> 阶段被擦除掉。</p>
+<p>可以将应用想象成一棵树，其中，绿色表示实际用到的代码，是树上活的树叶；灰色表示未引用代码，是秋天树上枯萎的树叶。为了除去死去的树叶，你必须摇动这棵树，使它们落下。这就是 Tree Shaking。</p>
+<h1 id="yuan-li">原理</h1>
+<p>利用<code>ES6模块</code>的特点：</p>
+<ol>
+<li>只能作为模块顶层的语句出现</li>
+<li>import 的模块名只能是字符串常量</li>
+<li>import binding 是 immutable 的</li>
+</ol>
+<p>在分析的时候，Tree Shaking 会知道哪些代码没用到，会给这些没用到的代码加一个注释，并在 uglify 的时候进行删除。</p>
+<p><strong>注意</strong>：由于使用到了<code>ES6模块</code>的特点，所以在使用<code>babel</code>的时候，需要将默认的<code>es6 模块</code>转为<code>es5 commonjs</code>禁止掉，即在<code>.babelrc</code>中，添加配置<code>modules: false</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .babelrc</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"presets"</span>: [</span><br><span class="line">        [</span><br><span class="line">            <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"modules"</span>: <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"@babel/preset-react"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="zen-yao-yong">怎么用</h1>
+<p>webpack 默认支持，<code>production</code>模式下默认开启。</p>
+<p>新建一个模块 treeshaking.js:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// treeshaking.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">a</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'func a'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">b</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'func b'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在另一模块中导入：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; a &#125; <span class="keyword">from</span> <span class="string">'/path/to/treeshaking.js'</span></span><br><span class="line"><span class="comment">// ... 余下代码中并不使用函数a</span></span><br></pre></td></tr></table></figure>
+<p>开启 Tree Shaking 前：<br>
+<img src="/2019/12/16/webpack中的TreeShaking/before.png" alt></p>
+<p>开启 Tree Shaking 后：<br>
+<img src="/2019/12/16/webpack中的TreeShaking/after.png" alt></p>
+<p>在 index.js 中使用函数 a，并开启 Tree Shaking 后：<br>
+<img src="/2019/12/16/webpack中的TreeShaking/use-a.png" alt></p>
+<h1 id="can-kao">参考</h1>
+<p><a href="https://webpack.docschina.org/guides/tree-shaking/" target="_blank" rel="noopener">Tree Shaking - WebPack中文文档</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpacck/" rel="tag"># webpacck</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/03/webpack中的一些常用配置【二】/" rel="next" title="webpack中的一些常用配置【二】">
+                <i class="fa fa-chevron-left"></i> webpack中的一些常用配置【二】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -497,6 +448,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -516,8 +471,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="鑫。">
           <p class="site-author-name" itemprop="name">鑫。</p>
@@ -564,6 +528,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yao-shi-tree-shaking"><span class="nav-number">1.</span> <span class="nav-text">什么是Tree Shaking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yuan-li"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zen-yao-yong"><span class="nav-number">3.</span> <span class="nav-text">怎么用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#can-kao"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -663,11 +643,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
 
 
   
