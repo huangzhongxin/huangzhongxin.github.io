@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="LeetCode,">
+  <meta name="keywords" content="webpack,">
 
 
 
@@ -87,18 +87,24 @@
 
 
 
-<meta name="description" content="题目链接：86. Partition List  概述 这个题目给定一个单链表L以及一个整数x，使得所有小于x的节点在大于等于x的节点之前，同时要保证顺序和原链表一致。">
-<meta name="keywords" content="LeetCode">
+<meta name="description" content="本文介绍了 webpack 中的 Scope Hoisting。">
+<meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode题解|86. Partition List">
-<meta property="og:url" content="http://yoursite.com/2019/04/14/LeetCode题解-86-Partition-List/index.html">
+<meta property="og:title" content="webpack中的Scope Hoisting">
+<meta property="og:url" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/index.html">
 <meta property="og:site_name" content="鑫。">
-<meta property="og:description" content="题目链接：86. Partition List  概述 这个题目给定一个单链表L以及一个整数x，使得所有小于x的节点在大于等于x的节点之前，同时要保证顺序和原链表一致。">
+<meta property="og:description" content="本文介绍了 webpack 中的 Scope Hoisting。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-14T11:20:15.088Z">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/source-code.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/source-code2.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/non-scope-hoisting.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/non-scope-hoisting.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/after-scope-hoisting.png">
+<meta property="og:updated_time" content="2019-12-23T02:58:37.612Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode题解|86. Partition List">
-<meta name="twitter:description" content="题目链接：86. Partition List  概述 这个题目给定一个单链表L以及一个整数x，使得所有小于x的节点在大于等于x的节点之前，同时要保证顺序和原链表一致。">
+<meta name="twitter:title" content="webpack中的Scope Hoisting">
+<meta name="twitter:description" content="本文介绍了 webpack 中的 Scope Hoisting。">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/source-code.png">
 
 
 
@@ -126,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/14/LeetCode题解-86-Partition-List/">
+  <link rel="canonical" href="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/">
 
 
 
 
 
-  <title> LeetCode题解|86. Partition List | 鑫。 </title>
+  <title> webpack中的Scope Hoisting | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/LeetCode题解-86-Partition-List/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/23/webpack中的ScopeHoisting/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="鑫。">
@@ -296,7 +302,7 @@
             
             
               
-                LeetCode题解|86. Partition List
+                webpack中的Scope Hoisting
               
             
           </h1>
@@ -311,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-14T18:53:52+08:00">
-                2019-04-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-23T10:18:27+08:00">
+                2019-12-23
               </time>
             
 
@@ -347,17 +353,31 @@
       
 
       
-        <blockquote>
-<p>题目链接：<a href="https://leetcode.com/problems/partition-list/" target="_blank" rel="noopener">86. Partition List</a></p>
-</blockquote>
-<h1 id="gai-shu">概述</h1>
-<p>这个题目给定一个单链表<code>L</code>以及一个整数<code>x</code>，使得所有小于<code>x</code>的节点在大于等于<code>x</code>的节点之前，同时要保证顺序和原链表一致。</p>
+        <p>本文介绍了 webpack 中的 Scope Hoisting。</p>
 <a id="more"></a>
-<h1 id="si-lu">思路</h1>
-<p>这个题目只要创建两个链表，遍历一遍原链表<code>L</code>，将所有节点按照要求，分别插入到两个新链表中，就完成了分隔，紧接着在将两段链表连接起来，即可得到答案。</p>
-<h1 id="shi-xian">实现</h1>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * function ListNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.next = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;ListNode&#125; head</span></span><br><span class="line"><span class="comment"> * @param &#123;number&#125; x</span></span><br><span class="line"><span class="comment"> * @return &#123;ListNode&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> partition = <span class="function"><span class="keyword">function</span>(<span class="params">head, x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> smaller = p1 = <span class="keyword">new</span> ListNode(<span class="literal">null</span>),</span><br><span class="line">        larger = p2 = <span class="keyword">new</span> ListNode(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(head != <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(head.val &lt; x)&#123;</span><br><span class="line">            smaller.next = head;</span><br><span class="line">            smaller = smaller.next</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            larger.next = head;</span><br><span class="line">            larger = larger.next;</span><br><span class="line">        &#125;</span><br><span class="line">        head = head.next;</span><br><span class="line">    &#125;</span><br><span class="line">    larger.next = <span class="literal">null</span>;</span><br><span class="line">    smaller.next = p2.next;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> p1.next;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
+<h1 id="xian-xiang">现象</h1>
+<p>在使用 webpack 构建后，如果查看其构建完成的 bundle 文件，会发现其中存在大量的闭包代码：<br>
+源码：<br>
+<img src="/2019/12/23/webpack中的ScopeHoisting/source-code.png" alt><br>
+<img src="/2019/12/23/webpack中的ScopeHoisting/source-code2.png" alt><br>
+构建后的代码：<br>
+<img src="/2019/12/23/webpack中的ScopeHoisting/non-scope-hoisting.png" alt></p>
+<p>可以看到，一个模块在经过 webpack 转换过后，会带上一层包裹，同时 <code>import</code> 会被转换成 <code>__webpack_require__</code> 调用；<code>export</code> 也会转换成调用 <code>__webpack_require__.d</code>（就是在模块上定义一个 getter 函数），并且加上注释 <code>/* harmony export (binding) */</code>。</p>
+<p>由于大量的作用域包裹代码，会导致体积增大，并且模块越多越明显。同时，运行时创建的函数作用域变多，内存开销变大。</p>
+<h1 id="jin-yi-bu-fen-xi">进一步分析</h1>
+<p>一个构建完成的文件格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">;(<span class="function"><span class="keyword">function</span> (<span class="params">modules</span>) </span>&#123; <span class="comment">// 入口</span></span><br><span class="line">  <span class="comment">// 用来缓存模块</span></span><br><span class="line">  <span class="keyword">var</span> installedModules = &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于加载模块的函数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">__webpack_require__</span> (<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (installedModules[moduleId]) &#123;</span><br><span class="line">      <span class="keyword">return</span> installedModules[moduleId].exports</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建一个新模块，并加入到缓存中</span></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">module</span> = (installedModules[moduleId] = &#123;</span><br><span class="line">      i: moduleId,</span><br><span class="line">      l: <span class="literal">false</span>,</span><br><span class="line">      exports: &#123;&#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行模块初始化函数</span></span><br><span class="line">    modules[moduleId].call(<span class="built_in">module</span>.exports, <span class="built_in">module</span>, <span class="built_in">module</span>.exports, __webpack_require__)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将模块标记为已加载</span></span><br><span class="line">    <span class="built_in">module</span>.l = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回导出的模块</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 加载入口模块</span></span><br><span class="line">  <span class="keyword">return</span> __webpack_require__((__webpack_require__.s = <span class="number">0</span>))</span><br><span class="line">&#125;)([</span><br><span class="line">  <span class="comment">/* 0 */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/* 1 */</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> (<span class="params">module, __webpack_exports__, __webpack_require__</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<p>可以看到，构建出来的是一个<code>IIFE</code>(匿名闭包函数)，<code>modules</code>是一个数组，每项都是一个模块初始化函数。</p>
+<h1 id="scope-hoisting-yuan-li">Scope Hoisting 原理</h1>
+<p>将所有模块的代码按照引用顺序放在一个函数作用域里，然后适当的重命名一些变量以防止变量名冲突。</p>
+<p>可以简单的把 Scope Hoisting 理解为是把每个模块被 webpack 处理成的模块初始化函数整理到一个统一的包裹函数里，也就是把多个作用域用一个作用域取代，以减少内存消耗并减少包裹块代码，从每个模块有一个包裹函数变成只有一个包裹函数包裹所有的模块，但是有一个前提就是，当模块的引用次数<code>大于1</code>时，比如被引用了两次或以上，那么这个效果会无效，也就是被引用多次的模块在被 webpack 处理后，会被独立的包裹函数所包裹，因为如果一个模块引用次数大于1次，那么这个模块的代码会被内联多次，从而增加了打包出来的 js bundle 的体积。</p>
+<h1 id="scope-hositing-shi-yong">Scope Hositing 使用</h1>
+<p>在 webpack 中，设置 <code>mode: 'production'</code> 之后，就默认添加了插件<code>webpack.optimize.ModuleConcatenationPlugin()</code>，开启了 Scope Hoisting。<br>
+使用前后对比：<br>
+使用前：<br>
+<img src="/2019/12/23/webpack中的ScopeHoisting/non-scope-hoisting.png" alt><br>
+使用后：<br>
+<img src="/2019/12/23/webpack中的ScopeHoisting/after-scope-hoisting.png" alt></p>
 
       
     </div>
@@ -381,7 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
           
         </div>
       
@@ -394,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/13/LeetCode题解-687-Longest-Univalue-Path/" rel="next" title="LeetCode题解|687. Longest Univalue Path">
-                <i class="fa fa-chevron-left"></i> LeetCode题解|687. Longest Univalue Path
+              <a href="/2019/12/16/webpack中的TreeShaking/" rel="next" title="webpack中的Tree Shaking">
+                <i class="fa fa-chevron-left"></i> webpack中的Tree Shaking
               </a>
             
           </div>
@@ -403,10 +423,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/14/LeetCode题解-652-Find-Duplicate-Subtrees/" rel="prev" title="LeetCode题解|652. Find Duplicate Subtrees">
-                LeetCode题解|652. Find Duplicate Subtrees <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +536,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-lu"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-xian"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xian-xiang"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jin-yi-bu-fen-xi"><span class="nav-number">2.</span> <span class="nav-text">进一步分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scope-hoisting-yuan-li"><span class="nav-number">3.</span> <span class="nav-text">Scope Hoisting 原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scope-hositing-shi-yong"><span class="nav-number">4.</span> <span class="nav-text">Scope Hositing 使用</span></a></li></ol></div>
             
 
           </div>
