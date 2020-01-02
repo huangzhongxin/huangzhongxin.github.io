@@ -71,6 +71,8 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="webpack,">
+
 
 
 
@@ -85,13 +87,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鑫。">
-<meta property="og:url" content="https://hzxin.top/tags/CORS/index.html">
+<meta name="description" content="本文介绍了 webpack 中的动态import。">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack中的动态import">
+<meta property="og:url" content="https://hzxin.top/2019/12/29/webpack中的动态import/index.html">
 <meta property="og:site_name" content="鑫。">
+<meta property="og:description" content="本文介绍了 webpack 中的动态import。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/code-module.png">
+<meta property="og:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/code.png">
+<meta property="og:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/compile-code.png">
+<meta property="og:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/compile-module.png">
+<meta property="og:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/html.png">
+<meta property="og:updated_time" content="2020-01-02T01:28:27.363Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鑫。">
+<meta name="twitter:title" content="webpack中的动态import">
+<meta name="twitter:description" content="本文介绍了 webpack 中的动态import。">
+<meta name="twitter:image" content="https://hzxin.top/2019/12/29/webpack中的动态import/code-module.png">
 
 
 
@@ -119,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="https://hzxin.top/tags/CORS/">
+  <link rel="canonical" href="https://hzxin.top/2019/12/29/webpack中的动态import/">
 
 
 
 
 
-  <title> 标签: CORS | 鑫。 </title>
+  <title> webpack中的动态import | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -165,7 +178,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -270,44 +283,181 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2>
-        CORS
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://hzxin.top/2019/12/29/webpack中的动态import/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="鑫。">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="鑫。">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="鑫。" src>
+    </span>
+  </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                webpack中的动态import
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-29T19:04:21+08:00">
+                2019-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <p>本文介绍了 webpack 中的动态import。</p>
+<a id="more"></a>
+<h1 id="lan-jia-zai-jiao-ben">懒加载脚本</h1>
+<p>在项目中，我们的某些代码块是在某些特殊的时候才会用到，如果我们把这些代码打包到一个 bundle 中，不仅会使 bundle 体积变大，也会让浏览器加载不必要的代码。如果使用脚本懒加载，就能够使得初始下载的代码更小，实现按需加载。</p>
+<h1 id="lan-jia-zai-de-liang-chong-fang-shi">懒加载的两种方式</h1>
+<p>懒加载有两种方式，分别是：</p>
+<ol>
+<li>Common JS: <code>require.ensure</code>（已被<code>import()</code>替代），参考：<a href="https://webpack.docschina.org/api/module-methods/#require-ensure" target="_blank" rel="noopener">webpack 模块方法 - require.ensure</a></li>
+<li>ES6: 动态import</li>
+</ol>
+<h2 id="dong-tai-import"><a class="header-anchor" href="#动态import">¶</a>动态import</h2>
+<blockquote>
+<p><code>import('path/to/module') -&gt; Promise</code></p>
+</blockquote>
+<p>调用<code>import()</code>之处，被作为分离的模块起点，意思是，被请求的模块和它引用的所有子模块，会分离到一个单独的 chunk 中。</p>
+<p>通过 webpack 构建之后，import() 会将模块抽离成为一个独立的文件，并在调用的地方，触发一个<code>jsonp</code>请求，加载这个模块。</p>
+<p>调用 import()：<br>
+<img src="/2019/12/29/webpack中的动态import/code-module.png" alt><br>
+<img src="/2019/12/29/webpack中的动态import/code.png" alt></p>
+<p>构建后的代码：<br>
+<img src="/2019/12/29/webpack中的动态import/compile-code.png" alt><br>
+<img src="/2019/12/29/webpack中的动态import/compile-module.png" alt></p>
+<p>页面效果：<br>
+<img src="/2019/12/29/webpack中的动态import/html.png" alt></p>
 
-      <h1 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2019/04/03/cors/" itemprop="url">
-              
-                <span itemprop="name">CORS</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-03T09:44:05+08:00" content="2019-04-03">
-          04-03
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/23/webpack中的ScopeHoisting/" rel="next" title="webpack中的Scope Hoisting">
+                <i class="fa fa-chevron-left"></i> webpack中的Scope Hoisting
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -315,6 +465,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -334,8 +488,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="鑫。">
           <p class="site-author-name" itemprop="name">鑫。</p>
@@ -382,6 +545,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lan-jia-zai-jiao-ben"><span class="nav-number">1.</span> <span class="nav-text">懒加载脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lan-jia-zai-de-liang-chong-fang-shi"><span class="nav-number">2.</span> <span class="nav-text">懒加载的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dong-tai-import"><span class="nav-number">2.1.</span> <span class="nav-text">¶动态import</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -497,6 +676,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
