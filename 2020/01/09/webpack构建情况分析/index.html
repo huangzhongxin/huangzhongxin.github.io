@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="LeetCode,">
+  <meta name="keywords" content="webpack,">
 
 
 
@@ -87,18 +87,22 @@
 
 
 
-<meta name="description" content="题目链接：28. 实现strStr()  概述 给定一个haystack字符串和一个needle字符串，在haystack字符串中找出needle字符串出现的第一个位置 (从0开始)。如果不存在，则返回-1。">
-<meta name="keywords" content="LeetCode">
+<meta name="description" content="本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。">
+<meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode题解|28. 实现strStr()">
-<meta property="og:url" content="https://hzxin.top/2019/09/08/LeetCode题解-28-实现strStr/index.html">
+<meta property="og:title" content="webpack构建情况分析">
+<meta property="og:url" content="https://hzxin.top/2020/01/09/webpack构建情况分析/index.html">
 <meta property="og:site_name" content="鑫。">
-<meta property="og:description" content="题目链接：28. 实现strStr()  概述 给定一个haystack字符串和一个needle字符串，在haystack字符串中找出needle字符串出现的第一个位置 (从0开始)。如果不存在，则返回-1。">
+<meta property="og:description" content="本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-08T02:43:34.331Z">
+<meta property="og:image" content="https://hzxin.top/2020/01/09/webpack构建情况分析/%E4%BE%9D%E8%B5%96%E5%9B%BE.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/09/webpack构建情况分析/smp.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/09/webpack构建情况分析/BundleAnalyzerPlugin.png">
+<meta property="og:updated_time" content="2020-01-10T02:49:37.327Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode题解|28. 实现strStr()">
-<meta name="twitter:description" content="题目链接：28. 实现strStr()  概述 给定一个haystack字符串和一个needle字符串，在haystack字符串中找出needle字符串出现的第一个位置 (从0开始)。如果不存在，则返回-1。">
+<meta name="twitter:title" content="webpack构建情况分析">
+<meta name="twitter:description" content="本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。">
+<meta name="twitter:image" content="https://hzxin.top/2020/01/09/webpack构建情况分析/%E4%BE%9D%E8%B5%96%E5%9B%BE.png">
 
 
 
@@ -126,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://hzxin.top/2019/09/08/LeetCode题解-28-实现strStr/">
+  <link rel="canonical" href="https://hzxin.top/2020/01/09/webpack构建情况分析/">
 
 
 
 
 
-  <title> LeetCode题解|28. 实现strStr() | 鑫。 </title>
+  <title> webpack构建情况分析 | 鑫。 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -287,7 +291,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://hzxin.top/2019/09/08/LeetCode题解-28-实现strStr/">
+  <link itemprop="mainEntityOfPage" href="https://hzxin.top/2020/01/09/webpack构建情况分析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="鑫。">
@@ -311,7 +315,7 @@
             
             
               
-                LeetCode题解|28. 实现strStr()
+                webpack构建情况分析
               
             
           </h1>
@@ -326,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-08T10:33:19+08:00">
-                2019-09-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T17:02:07+08:00">
+                2020-01-09
               </time>
             
 
@@ -367,18 +371,39 @@
       
 
       
-        <blockquote>
-<p>题目链接：<a href="https://leetcode-cn.com/problems/implement-strstr/description/" target="_blank" rel="noopener">28. 实现strStr()</a></p>
-</blockquote>
-<h1 id="gai-shu">概述</h1>
-<p>给定一个<code>haystack</code>字符串和一个<code>needle</code>字符串，在<code>haystack</code>字符串中找出<code>needle</code>字符串出现的第一个位置 (从0开始)。如果不存在，则返回<code>-1</code>。</p>
+        <p>本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。</p>
 <a id="more"></a>
-<h1 id="si-lu">思路</h1>
-<p>字符串匹配，有这么几种方法：<a href="https://baike.baidu.com/item/BF%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">BF算法</a>、<a href="https://blog.csdn.net/xlxxcc/article/details/64125265" target="_blank" rel="noopener">RK算法</a>、<a href="http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html" target="_blank" rel="noopener">BM算法</a>、<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">KMP算法</a></p>
-<p>本文使用了最简单的BF算法，击败了90.34%的JavaScript提交记录。</p>
-<h1 id="shi-xian">实现</h1>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; haystack</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; needle</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> strStr = <span class="function"><span class="keyword">function</span>(<span class="params">haystack, needle</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (needle === <span class="string">''</span> || needle === haystack) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> needleLen = needle.length</span><br><span class="line">    <span class="keyword">const</span> hayLen = haystack.length</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= hayLen - needleLen; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack.slice(i, needleLen + i) === needle) &#123;</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
+<h1 id="shi-yong-webpack-nei-zhi-de-stats">使用 webpack 内置的 stats</h1>
+<p>启动 webpack 时使用以下带参的命令，生成一个json文件：<br>
+<code>webpack --profile --json &gt; stats.json</code></p>
+<p><code>--profile</code>：记录构建过程中的耗时信息<br>
+<code>--json</code>：以JSON的格式输出构建结果</p>
+<p>该文件的结构可参考<a href="https://webpack.docschina.org/api/stats/" target="_blank" rel="noopener">官网文档</a></p>
+<p>得到<code>stats.json</code>后，可使用官方工具 <a href="http://webpack.github.io/analyse/" target="_blank" rel="noopener">Webpack Analyse</a> 对这个文件进行分析。<br>
+在该工具中，能够得到类似的依赖图：<br>
+<img src="/2020/01/09/webpack构建情况分析/%E4%BE%9D%E8%B5%96%E5%9B%BE.png" alt></p>
+<p>由于<code>stats.json</code>的粒度较粗，比较难看出构建的问题所在。为此，我们可以使用以下两个方法，来具体分析构建的速度与体积。</p>
+<h1 id="gou-jian-su-du-fen-xi">构建速度分析</h1>
+<p>在 webpack 中，可以使用插件<a href="https://www.npmjs.com/package/speed-measure-webpack-plugin" target="_blank" rel="noopener"><code>speed-measure-webpack-plugin</code></a>进行构建速度分析。</p>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i speed-measure-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> SpeedMeasureWebpackPlugin = <span class="built_in">require</span>(<span class="string">'speed-measure-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> smp = <span class="keyword">new</span> SpeedMeasureWebpackPlugin()</span><br><span class="line"><span class="built_in">module</span>.exports = smp.wrap(&#123;</span><br><span class="line">  <span class="comment">// 原来的配置</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在导出的配置外面包裹上<code>smp.wrap</code>之后，再次运行构建，就能看到以下输出：<br>
+<img src="/2020/01/09/webpack构建情况分析/smp.png" alt></p>
+<p><code>SpeedMeasureWebpackPlugin</code>会将各个模块及插件的耗时情况用不同颜色标出，比如，绿色表示构建快，黄色表示构建速度一般，红色表示构建慢。</p>
+<p>得到了各模块的耗时情况，就可以根据具体的情况进行优化。<br>
+比如图中的<code>ExtractTextPlugin</code>耗时将近两分钟，我们就可以看下其中实现的代码，找出其中耗时的部分，fork 一份代码下来，根据自己的实际使用情况进行优化。<br>
+再比如图中的<code>sass-loader</code>耗时24秒，我们就能试试如果用 less 是否能够更快一些。</p>
+<h1 id="gou-jian-ti-ji-fen-xi">构建体积分析</h1>
+<p>在 webpack 中，可以使用插件<a href="https://www.npmjs.com/package/webpack-bundle-analyzer" target="_blank" rel="noopener"><code>webpack-bundle-analyzer</code></a>进行构建速度分析。</p>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i webpack-bundle-analyzer -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; BundleAnalyzerPlugin &#125; = <span class="built_in">require</span>(<span class="string">'webpack-bundle-analyzer'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ... 其他配置</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> BundleAnalyzerPlugin(),</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构建之后，会自动打开<a href="http://127.0.0.1:8888/" target="_blank" rel="noopener">http://127.0.0.1:8888/</a>，显示各个模块的体积大小：<br>
+<img src="/2020/01/09/webpack构建情况分析/BundleAnalyzerPlugin.png" alt></p>
+<p>从图上可以看出，react占据了绝大部分的体积。所以我们在优化的时候，可以考虑将react等库抽离出来，使用CDN等方式导入，以减小体积占用。</p>
 
       
     </div>
@@ -402,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
           
         </div>
       
@@ -415,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/08/LeetCode题解-27-移除元素/" rel="next" title="LeetCode题解|27. 移除元素">
-                <i class="fa fa-chevron-left"></i> LeetCode题解|27. 移除元素
+              <a href="/2019/12/29/webpack中的动态import/" rel="next" title="webpack中的动态import">
+                <i class="fa fa-chevron-left"></i> webpack中的动态import
               </a>
             
           </div>
@@ -424,10 +449,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/17/webpack的几个核心概念/" rel="prev" title="webpack的几个核心概念">
-                webpack的几个核心概念 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -541,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-lu"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-xian"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-webpack-nei-zhi-de-stats"><span class="nav-number">1.</span> <span class="nav-text">使用 webpack 内置的 stats</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gou-jian-su-du-fen-xi"><span class="nav-number">2.</span> <span class="nav-text">构建速度分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gou-jian-ti-ji-fen-xi"><span class="nav-number">3.</span> <span class="nav-text">构建体积分析</span></a></li></ol></div>
             
 
           </div>

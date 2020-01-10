@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[webpack构建情况分析]]></title>
+    <url>%2F2020%2F01%2F09%2Fwebpack%E6%9E%84%E5%BB%BA%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90%2F</url>
+    <content type="text"><![CDATA[本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。 使用 webpack 内置的 stats 启动 webpack 时使用以下带参的命令，生成一个json文件： webpack --profile --json &gt; stats.json --profile：记录构建过程中的耗时信息 --json：以JSON的格式输出构建结果 该文件的结构可参考官网文档 得到stats.json后，可使用官方工具 Webpack Analyse 对这个文件进行分析。 在该工具中，能够得到类似的依赖图： 由于stats.json的粒度较粗，比较难看出构建的问题所在。为此，我们可以使用以下两个方法，来具体分析构建的速度与体积。 构建速度分析 在 webpack 中，可以使用插件speed-measure-webpack-plugin进行构建速度分析。 安装： 1npm i speed-measure-webpack-plugin -D 使用： 1234567// webpack.config.jsconst SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin')const smp = new SpeedMeasureWebpackPlugin()module.exports = smp.wrap(&#123; // 原来的配置&#125;) 在导出的配置外面包裹上smp.wrap之后，再次运行构建，就能看到以下输出： SpeedMeasureWebpackPlugin会将各个模块及插件的耗时情况用不同颜色标出，比如，绿色表示构建快，黄色表示构建速度一般，红色表示构建慢。 得到了各模块的耗时情况，就可以根据具体的情况进行优化。 比如图中的ExtractTextPlugin耗时将近两分钟，我们就可以看下其中实现的代码，找出其中耗时的部分，fork 一份代码下来，根据自己的实际使用情况进行优化。 再比如图中的sass-loader耗时24秒，我们就能试试如果用 less 是否能够更快一些。 构建体积分析 在 webpack 中，可以使用插件webpack-bundle-analyzer进行构建速度分析。 安装： 1npm i webpack-bundle-analyzer -D 使用： 12345678910// webpack.config.jsconst &#123; BundleAnalyzerPlugin &#125; = require('webpack-bundle-analyzer')module.exports = &#123; // ... 其他配置 plugins: [ new BundleAnalyzerPlugin(), // ... ]&#125; 构建之后，会自动打开http://127.0.0.1:8888/，显示各个模块的体积大小： 从图上可以看出，react占据了绝大部分的体积。所以我们在优化的时候，可以考虑将react等库抽离出来，使用CDN等方式导入，以减小体积占用。]]></content>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[webpack中的动态import]]></title>
     <url>%2F2019%2F12%2F29%2Fwebpack%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81import%2F</url>
     <content type="text"><![CDATA[本文介绍了 webpack 中的动态import。 懒加载脚本 在项目中，我们的某些代码块是在某些特殊的时候才会用到，如果我们把这些代码打包到一个 bundle 中，不仅会使 bundle 体积变大，也会让浏览器加载不必要的代码。如果使用脚本懒加载，就能够使得初始下载的代码更小，实现按需加载。 懒加载的两种方式 懒加载有两种方式，分别是： Common JS: require.ensure（已被import()替代），参考：webpack 模块方法 - require.ensure ES6: 动态import ¶动态import import('path/to/module') -&gt; Promise 调用import()之处，被作为分离的模块起点，意思是，被请求的模块和它引用的所有子模块，会分离到一个单独的 chunk 中。 通过 webpack 构建之后，import() 会将模块抽离成为一个独立的文件，并在调用的地方，触发一个jsonp请求，加载这个模块。 调用 import()： 构建后的代码： 页面效果：]]></content>
