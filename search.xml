@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>webpack构建速度优化</title>
+    <url>/2020/01/11/webpack%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 <code>Happypack</code> / <code>thread-loader</code> / <code>parallel-webpack</code> 这几个解决方案。本文介绍了前两种方案。</p>
+<a id="more"></a>
+<p>优化前的构建速度：<br>
+<img src="/2020/01/11/webpack构建速度优化/before.png" alt></p>
+<h1 id="shi-yong-happypack">使用 Happypack</h1>
+<blockquote>
+<p><a href="https://github.com/amireh/happypack" target="_blank" rel="noopener">Github - amireh/happypack</a></p>
+</blockquote>
+<h2 id="yuan-li"><a class="header-anchor" href="#原理">¶</a>原理</h2>
+<p>happypack 会创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给 happypack 的主进程，然后完成整个构建任务。参见下图：<br>
+<img src="/2020/01/11/webpack构建速度优化/HappyPack_Workflow.png" alt></p>
+<h2 id="an-zhuang-ji-shi-yong"><a class="header-anchor" href="#安装及使用">¶</a>安装及使用</h2>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i happypack -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'happypack/loader'</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> HappyPack(&#123;</span><br><span class="line">      loaders: [<span class="string">'babel-loader'</span>]</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用后构建速度：<br>
+<img src="/2020/01/11/webpack构建速度优化/happypack.png" alt><br>
+可以看到，happypack 开启了三个线程进行构建，大幅度地缩减了构建时间。</p>
+<h1 id="thread-loader">thread-loader</h1>
+<blockquote>
+<p><a href="https://github.com/webpack-contrib/thread-loader" target="_blank" rel="noopener">Github - webpack-contrib/thread-loader</a></p>
+</blockquote>
+<h2 id="yuan-li-1"><a class="header-anchor" href="#原理-v2">¶</a>原理</h2>
+<p>thread-loader 的原理与 happypack 类似，也是创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给主进程，然后完成整个构建任务。</p>
+<h2 id="an-zhuang-ji-shi-yong-1"><a class="header-anchor" href="#安装及使用-v2">¶</a>安装及使用</h2>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i thread-loader -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> HappyPack = <span class="built_in">require</span>(<span class="string">'happypack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          <span class="string">'thread-loader'</span>, <span class="comment">// 默认开启 (cpu个数 - 1) 个线程</span></span><br><span class="line">          <span class="string">'babel-loader'</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用后构建速度：<br>
+<img src="/2020/01/11/webpack构建速度优化/thread-loader.png" alt><br>
+可以看到，thread-loader 使用后也大幅度地缩减了构建时间。</p>
+]]></content>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>webpack构建情况分析</title>
     <url>/2020/01/09/webpack%E6%9E%84%E5%BB%BA%E6%83%85%E5%86%B5%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<p>本文介绍了如何分析 webpack 的构建情况，为后续的优化提供了基础。</p>
@@ -140,7 +181,7 @@
 <p><a href="https://webpack.docschina.org/guides/tree-shaking/" target="_blank" rel="noopener">Tree Shaking - WebPack中文文档</a></p>
 ]]></content>
       <tags>
-        <tag>webpacck</tag>
+        <tag>webpack</tag>
       </tags>
   </entry>
   <entry>
