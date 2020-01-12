@@ -54,7 +54,7 @@
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/HappyPack_Workflow.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/happypack.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/thread-loader.png">
-<meta property="og:updated_time" content="2020-01-12T01:40:19.628Z">
+<meta property="og:updated_time" content="2020-01-12T12:33:37.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack构建速度优化">
 <meta name="twitter:description" content="优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 Happypack / thread-loader / parallel-webpack 这几个解决方案。本文介绍了前两种方案。">
@@ -311,7 +311,22 @@
 <p>使用后构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/thread-loader.png" alt><br>
 可以看到，thread-loader 使用后也大幅度地缩减了构建时间。</p>
-
+<h1 id="duo-jin-cheng-bing-xing-ya-suo">多进程并行压缩</h1>
+<p>并行压缩代码，有两种方式：</p>
+<ol>
+<li>使用 parallel-uglify-plugin 插件</li>
+<li>使用 terser-webpack-plugin 开启 parallel 参数</li>
+</ol>
+<h2 id="shi-yong-parallel-uglify-plugin-cha-jian"><a class="header-anchor" href="#使用-parallel-uglify-plugin-插件">¶</a>使用 parallel-uglify-plugin 插件</h2>
+<blockquote>
+<p><a href="https://github.com/gdborton/webpack-parallel-uglify-plugin" target="_blank" rel="noopener">Github - gdborton/webpack-parallel-uglify-plugin</a></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> ParallelUglifyPlugin = <span class="built_in">require</span>(<span class="string">'webpack-parallel-uglify-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> ParallelUglifyPlugin()</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><a class="header-anchor" href="#使用-terser-webpack-plugin-开启-parallel-参数">¶</a>使用 terser-webpack-plugin 开启 parallel 参数</h2>
+<blockquote>
+<p><a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener">Github - webpack-contrib/terser-webpack-plugin</a></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> TerserPlugin = <span class="built_in">require</span>(<span class="string">'terser-webpack-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">        parallel: <span class="literal">true</span>, <span class="comment">// 布尔值或开启的线程数，默认值为 (cpu个数 - 1)</span></span><br><span class="line">      &#125;),</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -393,7 +408,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.</span> <span class="nav-text">使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-loader"><span class="nav-number">2.</span> <span class="nav-text">thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.</span> <span class="nav-text">使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-loader"><span class="nav-number">2.</span> <span class="nav-text">thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duo-jin-cheng-bing-xing-ya-suo"><span class="nav-number">3.</span> <span class="nav-text">多进程并行压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-parallel-uglify-plugin-cha-jian"><span class="nav-number">3.1.</span> <span class="nav-text">¶使用 parallel-uglify-plugin 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><span class="nav-number">3.2.</span> <span class="nav-text">¶使用 terser-webpack-plugin 开启 parallel 参数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
