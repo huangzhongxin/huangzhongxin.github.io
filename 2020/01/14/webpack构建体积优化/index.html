@@ -42,20 +42,24 @@
   };
 </script>
 
-  <meta name="description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
-<meta name="keywords" content="LeetCode">
+  <meta name="description" content="本文介绍了几种 webpack 构建体积优化的方式。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode题解|3. Longest Substring Without Repeating Characters">
-<meta property="og:url" content="https://hzxin.top/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/index.html">
+<meta property="og:title" content="webpack构建体积优化">
+<meta property="og:url" content="https://hzxin.top/2020/01/14/webpack构建体积优化/index.html">
 <meta property="og:site_name" content="大胖">
-<meta property="og:description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
+<meta property="og:description" content="本文介绍了几种 webpack 构建体积优化的方式。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-14T10:39:26.241Z">
+<meta property="og:image" content="https://hzxin.top/2020/01/14/webpack构建体积优化/dll-before.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/14/webpack构建体积优化/dll-after.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/14/webpack构建体积优化/dll-build.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/14/webpack构建体积优化/dll-html.png">
+<meta property="og:updated_time" content="2020-01-15T02:49:51.694Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode题解|3. Longest Substring Without Repeating Characters">
-<meta name="twitter:description" content="题目链接：3. Longest Substring Without Repeating Characters  概述 这个题目给定一个字符串s，找出其中不含有重复字符的最长子串的长度。">
+<meta name="twitter:title" content="webpack构建体积优化">
+<meta name="twitter:description" content="本文介绍了几种 webpack 构建体积优化的方式。">
+<meta name="twitter:image" content="https://hzxin.top/2020/01/14/webpack构建体积优化/dll-before.png">
 
-<link rel="canonical" href="https://hzxin.top/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/">
+<link rel="canonical" href="https://hzxin.top/2020/01/14/webpack构建体积优化/">
 
 
 <script id="page-configurations">
@@ -67,7 +71,7 @@
   };
 </script>
 
-  <title>LeetCode题解|3. Longest Substring Without Repeating Characters | 大胖</title>
+  <title>webpack构建体积优化 | 大胖</title>
   
 
 
@@ -215,7 +219,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://hzxin.top/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/">
+    <link itemprop="mainEntityOfPage" href="https://hzxin.top/2020/01/14/webpack构建体积优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -228,7 +232,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LeetCode题解|3. Longest Substring Without Repeating Characters
+          webpack构建体积优化
         </h1>
 
         <div class="post-meta">
@@ -238,11 +242,11 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-04-13 18:52:20" itemprop="dateCreated datePublished" datetime="2019-04-13T18:52:20+08:00">2019-04-13</time>
+              <time title="创建时间：2020-01-14 10:52:20" itemprop="dateCreated datePublished" datetime="2020-01-14T10:52:20+08:00">2020-01-14</time>
             </span>
 
           
-            <span id="/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/" class="post-meta-item leancloud_visitors" data-flag-title="LeetCode题解|3. Longest Substring Without Repeating Characters" title="阅读次数">
+            <span id="/2020/01/14/webpack构建体积优化/" class="post-meta-item leancloud_visitors" data-flag-title="webpack构建体积优化" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -257,8 +261,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/13/LeetCode题解-3-Longest-Substring-Without-Repeating-Characters/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/01/14/webpack构建体积优化/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/01/14/webpack构建体积优化/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -273,20 +277,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>题目链接：<a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. Longest Substring Without Repeating Characters</a></p>
-</blockquote>
-<h1 id="gai-shu">概述</h1>
-<p>这个题目给定一个字符串<code>s</code>，找出其中不含有重复字符的<code>最长子串</code>的长度。</p>
+        <p>本文介绍了几种 webpack 构建体积优化的方式。</p>
 <a id="more"></a>
-<h1 id="si-lu">思路</h1>
-<p>该题目可使用 <a href="https://www.zhihu.com/question/314669016" target="_blank" rel="noopener">滑动窗口</a> 来做。</p>
-<p>具体来说，使用两个指针<code>left</code>、<code>right</code>来确定出一个子串的范围，如果<code>s[right]</code>已经在<code>s[left...right-1]</code>中出现过，则将<code>left</code>向右挪，反之则将<code>right</code>向右挪，直到<code>right</code>到达<code>s</code>结尾。</p>
-<p>通过这样对<code>s</code>进行一次扫描，即可得到最长子串。</p>
-<h1 id="shi-xian">实现</h1>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> maxLength = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> left = <span class="number">0</span>,</span><br><span class="line">        right = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(right &lt;= s.length)&#123;</span><br><span class="line">        <span class="keyword">if</span>(maxLength &lt; right - left)&#123;</span><br><span class="line">            maxLength = right - left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s.substring(left, right).indexOf(s[right]) != <span class="number">-1</span>)&#123;</span><br><span class="line">            left++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLength;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
-
+<h1 id="yu-bian-yi-zi-yuan-mo-kuai">预编译资源模块</h1>
+<ol>
+<li>在 <code>npm run build</code> 构建之前，先把一些基础包和业务包打包成一个文件</li>
+<li>使用 <code>DllPlugin</code> 进行分包</li>
+<li><code>DllPlugin</code> 把基础包打包成一个文件，然后全局暴露一个变量，需要在 html 引入进来</li>
+<li><code>DllPlugin</code> 中的 <code>options[name]</code> 要和 <code>output[library]</code> 对应起来，不然会报一个引用错误</li>
+<li>通过引入 <code>add-asset-html-webpack-plugin</code> 把已经打包的 js，通过 html 引入。注意不要和 <code>SpeedMeasurePlugin</code> 同时使用，会出错</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.js -- 打包成 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        library: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>] <span class="comment">// 要打包的库</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].dll.js'</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">'build/library'</span>),</span><br><span class="line">        library: <span class="string">'[name]'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            name: <span class="string">'[name]'</span>,</span><br><span class="line">            path: <span class="string">'./build/library/[name].manifest.json'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js -- 使用 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> AddAssetHtmlPlugin = <span class="built_in">require</span>(<span class="string">'add-asset-html-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123; <span class="comment">// 通过引用 .dll.js 中打包生成的 manifest,json 文件，来引用打包的库文件</span></span><br><span class="line">      manifest: <span class="built_in">require</span>(<span class="string">'./build/library/library.manifest.json'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(),</span><br><span class="line">    <span class="keyword">new</span> AddAssetHtmlPlugin(&#123; <span class="comment">// 把 .dll.js 文件添加到 html 中。注意！AddAssetHtmlPlugin 必须在 HtmlWebpackPlugin 后使用</span></span><br><span class="line">      filepath: path.resolve(<span class="string">'./build/library/*.dll.js'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用前：<br>
+<img src="/2020/01/14/webpack构建体积优化/dll-before.png" alt><br>
+使用后：<br>
+<img src="/2020/01/14/webpack构建体积优化/dll-after.png" alt><br>
+<img src="/2020/01/14/webpack构建体积优化/dll-build.png" alt><br>
+<img src="/2020/01/14/webpack构建体积优化/dll-html.png" alt></p>
+<p>可以看到，构建体积明显小了很多。</p>
+<h1 id="suo-xiao-gou-jian-mu-biao">缩小构建目标</h1>
+<p>可以通过减少构建的模块，来使构建体积、速度得到一定的优化，比如 <code>babel-loader</code> 不解析 <code>node_modules</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="string">'node_modules'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -294,9 +306,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
-          </div>
 
         
 
@@ -304,13 +313,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/04/13/LeetCode题解-971-Flip-Binary-Tree-To-Match-Preorder-Traversal/" rel="prev" title="LeetCode题解|971. Flip Binary Tree To Match Preorder Traversal">
-      <i class="fa fa-chevron-left"></i> LeetCode题解|971. Flip Binary Tree To Match Preorder Traversal
+    <a href="/2020/01/11/webpack构建速度优化/" rel="prev" title="webpack构建速度优化">
+      <i class="fa fa-chevron-left"></i> webpack构建速度优化
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/04/13/LeetCode题解-143-Reorder-List/" rel="next" title="LeetCode题解|143. Reorder List">
-      LeetCode题解|143. Reorder List <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -371,7 +377,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-lu"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-xian"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yu-bian-yi-zi-yuan-mo-kuai"><span class="nav-number">1.</span> <span class="nav-text">预编译资源模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-xiao-gou-jian-mu-biao"><span class="nav-number">2.</span> <span class="nav-text">缩小构建目标</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

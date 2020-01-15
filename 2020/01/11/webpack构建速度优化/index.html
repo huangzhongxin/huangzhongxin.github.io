@@ -42,22 +42,28 @@
   };
 </script>
 
-  <meta name="description" content="优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 Happypack / thread-loader / parallel-webpack 这几个解决方案。本文介绍了前两种方案。">
+  <meta name="description" content="本文介绍了几种优化 webpack 构建速度的方式。">
 <meta name="keywords" content="webpack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webpack构建速度优化">
 <meta property="og:url" content="https://hzxin.top/2020/01/11/webpack构建速度优化/index.html">
 <meta property="og:site_name" content="大胖">
-<meta property="og:description" content="优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 Happypack / thread-loader / parallel-webpack 这几个解决方案。本文介绍了前两种方案。">
+<meta property="og:description" content="本文介绍了几种优化 webpack 构建速度的方式。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/before.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/HappyPack_Workflow.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/happypack.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/thread-loader.png">
-<meta property="og:updated_time" content="2020-01-12T12:33:37.540Z">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/babel-loader-first.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/babel-loader-second.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/terser-first.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/terser-second.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/hard-source-first.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/hard-source-second.png">
+<meta property="og:updated_time" content="2020-01-15T03:25:29.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack构建速度优化">
-<meta name="twitter:description" content="优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 Happypack / thread-loader / parallel-webpack 这几个解决方案。本文介绍了前两种方案。">
+<meta name="twitter:description" content="本文介绍了几种优化 webpack 构建速度的方式。">
 <meta name="twitter:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/before.png">
 
 <link rel="canonical" href="https://hzxin.top/2020/01/11/webpack构建速度优化/">
@@ -278,8 +284,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>优化构建速度，基本上都是通过多进程/多线程同时构建的方式来进行优化，目前主要有 <code>Happypack</code> / <code>thread-loader</code> / <code>parallel-webpack</code> 这几个解决方案。本文介绍了前两种方案。</p>
+        <p>本文介绍了几种优化 webpack 构建速度的方式。</p>
 <a id="more"></a>
+<p>优化构建速度，可以通过多进程/多线程同时构建的方式来进行优化，目前主要有 <code>Happypack</code> / <code>thread-loader</code> / <code>parallel-webpack</code> 这几个解决方案。本文主要介绍了前两种方案。</p>
 <p>优化前的构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/before.png" alt></p>
 <h1 id="shi-yong-happypack">使用 Happypack</h1>
@@ -327,6 +334,53 @@
 <p><a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener">Github - webpack-contrib/terser-webpack-plugin</a></p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> TerserPlugin = <span class="built_in">require</span>(<span class="string">'terser-webpack-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimize: <span class="literal">true</span>,</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">        parallel: <span class="literal">true</span>, <span class="comment">// 布尔值或开启的线程数，默认值为 (cpu个数 - 1)</span></span><br><span class="line">      &#125;),</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="huan-cun">缓存</h1>
+<p>缓存对于首次构建并没有什么帮助，但是，可以充分利用缓存，提升二次构建的速度。<br>
+开启缓存有三种方式：</p>
+<ol>
+<li>babel-loader 开启缓存 – bebal 转换 js 的时候的缓存</li>
+<li>terser-webpack-plugin 开启缓存 – 代码压缩阶段的缓存</li>
+<li>使用 hard-source-webpack-plugin – 模块转换阶段的缓存</li>
+</ol>
+<p>缓存的存储位置位于 <code>./node-modules/.cache</code> 。</p>
+<h2 id="babel-loader-huan-cun"><a class="header-anchor" href="#babel-loader-缓存">¶</a>babel-loader 缓存</h2>
+<p>设置 <code>babel-loader</code> 的 <code>cacheDirectory</code> 选项为 <code>true</code>，即可开启缓存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">  rules: [</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    &#123;</span><br><span class="line">      loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">      options: &#123;</span><br><span class="line">        cacheDirectory: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/babel-loader-first.png" alt><br>
+第二次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/babel-loader-second.png" alt></p>
+<p>可以看到，开启缓存后，有小幅度优化。</p>
+<h2 id="terser-webpack-plugin-huan-cun"><a class="header-anchor" href="#terser-webpack-plugin-缓存">¶</a>terser-webpack-plugin 缓存</h2>
+<p>设置 <code>TerserPlugin</code> 的 <code>cache</code> 选项为 <code>true</code>，即可开启缓存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">optimization: &#123;</span><br><span class="line">  minimize: <span class="literal">true</span>,</span><br><span class="line">  minimizer: [</span><br><span class="line">    <span class="keyword">new</span> TerserPlugin(&#123;</span><br><span class="line">      cache: <span class="literal">true</span>, <span class="comment">// 开启缓存</span></span><br><span class="line">    &#125;),</span><br><span class="line">  ],</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>第一次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/terser-first.png" alt><br>
+第二次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/terser-second.png" alt></p>
+<p>可以看到，开启缓存后，优化效果明显。</p>
+<h2 id="hard-source-webpack-plugin-huan-cun"><a class="header-anchor" href="#hard-source-webpack-plugin-缓存">¶</a>hard-source-webpack-plugin 缓存</h2>
+<p>添加插件 <code>hard-source-webpack-plugin</code> 即可开启缓存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="keyword">new</span> HardSourceWebpackPlugin()</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>第一次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/hard-source-first.png" alt><br>
+第二次构建：<br>
+<img src="/2020/01/11/webpack构建速度优化/hard-source-second.png" alt></p>
+<p>可以看到，开启缓存后，优化效果明显。</p>
+<h1 id="suo-xiao-gou-jian-mu-biao">缩小构建目标</h1>
+<p>可以通过减少构建的模块，来使构建速度得到一定的优化，比如 <code>babel-loader</code> 不解析 <code>node_modules</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="string">'node_modules'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="jian-shao-wen-jian-sou-suo-fan-wei">减少文件搜索范围</h1>
+<p>webpack 在解析文件时，会逐层往上找，比如 <code>require('react')</code> ，会先搜索当前目录下是否存在 <code>react.js/.json</code> 等文件，没找到的话，再到 <code>node_modules</code> 及上层目录中找，较为耗时。</p>
+<p>因此，可以指定搜索范围来减少这种不必要的搜索。主要有以下4点：</p>
+<ol>
+<li>优化 <code>resolve.modules</code> 配置：指定模块查找位置</li>
+<li>优化 <code>resolve.mainFileds</code> 配置：模块入口文件字段</li>
+<li>优化 <code>resolve.extensions</code> 配置：缺少扩展名时，尝试补齐的文件类型</li>
+<li>使用 <code>alias</code>：模块位置</li>
+</ol>
+<p>如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'react'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react/umd/react.production.min.js'</span>),</span><br><span class="line">      <span class="string">'react-dom'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react-dom/umd/react-dom.production.min.js'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'src'</span>), <span class="string">'node_modules'</span>],</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.jsx'</span>],</span><br><span class="line">    mainFields: [<span class="string">'main'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -347,7 +401,10 @@
     <a href="/2020/01/09/webpack构建情况分析/" rel="prev" title="webpack构建情况分析">
       <i class="fa fa-chevron-left"></i> webpack构建情况分析
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/14/webpack构建体积优化/" rel="next" title="webpack构建体积优化">
+      webpack构建体积优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -408,7 +465,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.</span> <span class="nav-text">使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-loader"><span class="nav-number">2.</span> <span class="nav-text">thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duo-jin-cheng-bing-xing-ya-suo"><span class="nav-number">3.</span> <span class="nav-text">多进程并行压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-parallel-uglify-plugin-cha-jian"><span class="nav-number">3.1.</span> <span class="nav-text">¶使用 parallel-uglify-plugin 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><span class="nav-number">3.2.</span> <span class="nav-text">¶使用 terser-webpack-plugin 开启 parallel 参数</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.</span> <span class="nav-text">使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-loader"><span class="nav-number">2.</span> <span class="nav-text">thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duo-jin-cheng-bing-xing-ya-suo"><span class="nav-number">3.</span> <span class="nav-text">多进程并行压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-parallel-uglify-plugin-cha-jian"><span class="nav-number">3.1.</span> <span class="nav-text">¶使用 parallel-uglify-plugin 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><span class="nav-number">3.2.</span> <span class="nav-text">¶使用 terser-webpack-plugin 开启 parallel 参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#huan-cun"><span class="nav-number">4.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-loader-huan-cun"><span class="nav-number">4.1.</span> <span class="nav-text">¶babel-loader 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#terser-webpack-plugin-huan-cun"><span class="nav-number">4.2.</span> <span class="nav-text">¶terser-webpack-plugin 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-source-webpack-plugin-huan-cun"><span class="nav-number">4.3.</span> <span class="nav-text">¶hard-source-webpack-plugin 缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-xiao-gou-jian-mu-biao"><span class="nav-number">5.</span> <span class="nav-text">缩小构建目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-shao-wen-jian-sou-suo-fan-wei"><span class="nav-number">6.</span> <span class="nav-text">减少文件搜索范围</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -422,7 +479,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
