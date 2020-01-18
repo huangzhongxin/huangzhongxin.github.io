@@ -60,7 +60,11 @@
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/terser-second.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/hard-source-first.png">
 <meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/hard-source-second.png">
-<meta property="og:updated_time" content="2020-01-15T03:25:29.154Z">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/dll-before.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/dll-after.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/dll-build.png">
+<meta property="og:image" content="https://hzxin.top/2020/01/11/webpack构建速度优化/dll-html.png">
+<meta property="og:updated_time" content="2020-01-15T08:26:44.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack构建速度优化">
 <meta name="twitter:description" content="本文介绍了几种优化 webpack 构建速度的方式。">
@@ -286,17 +290,18 @@
       
         <p>本文介绍了几种优化 webpack 构建速度的方式。</p>
 <a id="more"></a>
+<h1 id="duo-jin-cheng">多进程</h1>
 <p>优化构建速度，可以通过多进程/多线程同时构建的方式来进行优化，目前主要有 <code>Happypack</code> / <code>thread-loader</code> / <code>parallel-webpack</code> 这几个解决方案。本文主要介绍了前两种方案。</p>
 <p>优化前的构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/before.png" alt></p>
-<h1 id="shi-yong-happypack">使用 Happypack</h1>
+<h2 id="shi-yong-happypack"><a class="header-anchor" href="#使用-happypack">¶</a>使用 Happypack</h2>
 <blockquote>
 <p><a href="https://github.com/amireh/happypack" target="_blank" rel="noopener">Github - amireh/happypack</a></p>
 </blockquote>
-<h2 id="yuan-li"><a class="header-anchor" href="#原理">¶</a>原理</h2>
+<h3 id="yuan-li"><a class="header-anchor" href="#原理">¶</a>原理</h3>
 <p>happypack 会创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给 happypack 的主进程，然后完成整个构建任务。参见下图：<br>
 <img src="/2020/01/11/webpack构建速度优化/HappyPack_Workflow.png" alt></p>
-<h2 id="an-zhuang-ji-shi-yong"><a class="header-anchor" href="#安装及使用">¶</a>安装及使用</h2>
+<h3 id="an-zhuang-ji-shi-yong"><a class="header-anchor" href="#安装及使用">¶</a>安装及使用</h3>
 <p>安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i happypack -D</span><br></pre></td></tr></table></figure>
 <p>使用：</p>
@@ -304,13 +309,13 @@
 <p>使用后构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/happypack.png" alt><br>
 可以看到，happypack 开启了三个线程进行构建，大幅度地缩减了构建时间。</p>
-<h1 id="thread-loader">thread-loader</h1>
+<h2 id="thread-loader"><a class="header-anchor" href="#thread-loader">¶</a>thread-loader</h2>
 <blockquote>
 <p><a href="https://github.com/webpack-contrib/thread-loader" target="_blank" rel="noopener">Github - webpack-contrib/thread-loader</a></p>
 </blockquote>
-<h2 id="yuan-li-1"><a class="header-anchor" href="#原理-v2">¶</a>原理</h2>
+<h3 id="yuan-li-1"><a class="header-anchor" href="#原理-v2">¶</a>原理</h3>
 <p>thread-loader 的原理与 happypack 类似，也是创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给主进程，然后完成整个构建任务。</p>
-<h2 id="an-zhuang-ji-shi-yong-1"><a class="header-anchor" href="#安装及使用-v2">¶</a>安装及使用</h2>
+<h3 id="an-zhuang-ji-shi-yong-1"><a class="header-anchor" href="#安装及使用-v2">¶</a>安装及使用</h3>
 <p>安装：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i thread-loader -D</span><br></pre></td></tr></table></figure>
 <p>使用：</p>
@@ -318,18 +323,18 @@
 <p>使用后构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/thread-loader.png" alt><br>
 可以看到，thread-loader 使用后也大幅度地缩减了构建时间。</p>
-<h1 id="duo-jin-cheng-bing-xing-ya-suo">多进程并行压缩</h1>
+<h2 id="duo-jin-cheng-bing-xing-ya-suo"><a class="header-anchor" href="#多进程并行压缩">¶</a>多进程并行压缩</h2>
 <p>并行压缩代码，有两种方式：</p>
 <ol>
 <li>使用 parallel-uglify-plugin 插件</li>
 <li>使用 terser-webpack-plugin 开启 parallel 参数</li>
 </ol>
-<h2 id="shi-yong-parallel-uglify-plugin-cha-jian"><a class="header-anchor" href="#使用-parallel-uglify-plugin-插件">¶</a>使用 parallel-uglify-plugin 插件</h2>
+<h3 id="shi-yong-parallel-uglify-plugin-cha-jian"><a class="header-anchor" href="#使用-parallel-uglify-plugin-插件">¶</a>使用 parallel-uglify-plugin 插件</h3>
 <blockquote>
 <p><a href="https://github.com/gdborton/webpack-parallel-uglify-plugin" target="_blank" rel="noopener">Github - gdborton/webpack-parallel-uglify-plugin</a></p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> ParallelUglifyPlugin = <span class="built_in">require</span>(<span class="string">'webpack-parallel-uglify-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> ParallelUglifyPlugin()</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><a class="header-anchor" href="#使用-terser-webpack-plugin-开启-parallel-参数">¶</a>使用 terser-webpack-plugin 开启 parallel 参数</h2>
+<h3 id="shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><a class="header-anchor" href="#使用-terser-webpack-plugin-开启-parallel-参数">¶</a>使用 terser-webpack-plugin 开启 parallel 参数</h3>
 <blockquote>
 <p><a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener">Github - webpack-contrib/terser-webpack-plugin</a></p>
 </blockquote>
@@ -367,6 +372,23 @@
 第二次构建：<br>
 <img src="/2020/01/11/webpack构建速度优化/hard-source-second.png" alt></p>
 <p>可以看到，开启缓存后，优化效果明显。</p>
+<h1 id="yu-bian-yi-zi-yuan-mo-kuai">预编译资源模块</h1>
+<ol>
+<li>在 <code>npm run build</code> 构建之前，先把一些基础包和业务包打包成一个文件</li>
+<li>使用 <code>DllPlugin</code> 进行分包</li>
+<li><code>DllPlugin</code> 把基础包打包成一个文件，然后全局暴露一个变量，需要在 html 引入进来</li>
+<li><code>DllPlugin</code> 中的 <code>options[name]</code> 要和 <code>output[library]</code> 对应起来，不然会报一个引用错误</li>
+<li>通过引入 <code>add-asset-html-webpack-plugin</code> 把已经打包的 js，通过 html 引入。注意不要和 <code>SpeedMeasurePlugin</code> 同时使用，会出错</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.js -- 打包成 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        library: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>] <span class="comment">// 要打包的库</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].dll.js'</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">'build/library'</span>),</span><br><span class="line">        library: <span class="string">'[name]'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            name: <span class="string">'[name]'</span>,</span><br><span class="line">            path: <span class="string">'./build/library/[name].manifest.json'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js -- 使用 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> AddAssetHtmlPlugin = <span class="built_in">require</span>(<span class="string">'add-asset-html-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123; <span class="comment">// 通过引用 .dll.js 中打包生成的 manifest,json 文件，来引用打包的库文件</span></span><br><span class="line">      manifest: <span class="built_in">require</span>(<span class="string">'./build/library/library.manifest.json'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(),</span><br><span class="line">    <span class="keyword">new</span> AddAssetHtmlPlugin(&#123; <span class="comment">// 把 .dll.js 文件添加到 html 中。注意！AddAssetHtmlPlugin 必须在 HtmlWebpackPlugin 后使用</span></span><br><span class="line">      filepath: path.resolve(<span class="string">'./build/library/*.dll.js'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用前：<br>
+<img src="/2020/01/11/webpack构建速度优化/dll-before.png" alt><br>
+使用后：<br>
+<img src="/2020/01/11/webpack构建速度优化/dll-after.png" alt><br>
+<img src="/2020/01/11/webpack构建速度优化/dll-build.png" alt><br>
+<img src="/2020/01/11/webpack构建速度优化/dll-html.png" alt></p>
+<p>可以看到，构建体积明显小了很多。</p>
 <h1 id="suo-xiao-gou-jian-mu-biao">缩小构建目标</h1>
 <p>可以通过减少构建的模块，来使构建速度得到一定的优化，比如 <code>babel-loader</code> 不解析 <code>node_modules</code>：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="string">'node_modules'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -381,6 +403,7 @@
 </ol>
 <p>如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'react'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react/umd/react.production.min.js'</span>),</span><br><span class="line">      <span class="string">'react-dom'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react-dom/umd/react-dom.production.min.js'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'src'</span>), <span class="string">'node_modules'</span>],</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.jsx'</span>],</span><br><span class="line">    mainFields: [<span class="string">'main'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -465,7 +488,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.</span> <span class="nav-text">使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#thread-loader"><span class="nav-number">2.</span> <span class="nav-text">thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#duo-jin-cheng-bing-xing-ya-suo"><span class="nav-number">3.</span> <span class="nav-text">多进程并行压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-parallel-uglify-plugin-cha-jian"><span class="nav-number">3.1.</span> <span class="nav-text">¶使用 parallel-uglify-plugin 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><span class="nav-number">3.2.</span> <span class="nav-text">¶使用 terser-webpack-plugin 开启 parallel 参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#huan-cun"><span class="nav-number">4.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-loader-huan-cun"><span class="nav-number">4.1.</span> <span class="nav-text">¶babel-loader 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#terser-webpack-plugin-huan-cun"><span class="nav-number">4.2.</span> <span class="nav-text">¶terser-webpack-plugin 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-source-webpack-plugin-huan-cun"><span class="nav-number">4.3.</span> <span class="nav-text">¶hard-source-webpack-plugin 缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-xiao-gou-jian-mu-biao"><span class="nav-number">5.</span> <span class="nav-text">缩小构建目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-shao-wen-jian-sou-suo-fan-wei"><span class="nav-number">6.</span> <span class="nav-text">减少文件搜索范围</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#duo-jin-cheng"><span class="nav-number">1.</span> <span class="nav-text">多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-happypack"><span class="nav-number">1.1.</span> <span class="nav-text">¶使用 Happypack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yuan-li"><span class="nav-number">1.1.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#an-zhuang-ji-shi-yong"><span class="nav-number">1.1.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#thread-loader"><span class="nav-number">1.2.</span> <span class="nav-text">¶thread-loader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yuan-li-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">¶原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#an-zhuang-ji-shi-yong-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">¶安装及使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duo-jin-cheng-bing-xing-ya-suo"><span class="nav-number">1.3.</span> <span class="nav-text">¶多进程并行压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shi-yong-parallel-uglify-plugin-cha-jian"><span class="nav-number">1.3.1.</span> <span class="nav-text">¶使用 parallel-uglify-plugin 插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><span class="nav-number">1.3.2.</span> <span class="nav-text">¶使用 terser-webpack-plugin 开启 parallel 参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#huan-cun"><span class="nav-number">2.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-loader-huan-cun"><span class="nav-number">2.1.</span> <span class="nav-text">¶babel-loader 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#terser-webpack-plugin-huan-cun"><span class="nav-number">2.2.</span> <span class="nav-text">¶terser-webpack-plugin 缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-source-webpack-plugin-huan-cun"><span class="nav-number">2.3.</span> <span class="nav-text">¶hard-source-webpack-plugin 缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yu-bian-yi-zi-yuan-mo-kuai"><span class="nav-number">3.</span> <span class="nav-text">预编译资源模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-xiao-gou-jian-mu-biao"><span class="nav-number">4.</span> <span class="nav-text">缩小构建目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jian-shao-wen-jian-sou-suo-fan-wei"><span class="nav-number">5.</span> <span class="nav-text">减少文件搜索范围</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

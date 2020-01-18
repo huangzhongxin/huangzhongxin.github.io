@@ -5,43 +5,67 @@
     <url>/2020/01/14/webpack%E6%9E%84%E5%BB%BA%E4%BD%93%E7%A7%AF%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<p>本文介绍了几种 webpack 构建体积优化的方式。</p>
 <a id="more"></a>
-<h1 id="yu-bian-yi-zi-yuan-mo-kuai">预编译资源模块</h1>
-<ol>
-<li>在 <code>npm run build</code> 构建之前，先把一些基础包和业务包打包成一个文件</li>
-<li>使用 <code>DllPlugin</code> 进行分包</li>
-<li><code>DllPlugin</code> 把基础包打包成一个文件，然后全局暴露一个变量，需要在 html 引入进来</li>
-<li><code>DllPlugin</code> 中的 <code>options[name]</code> 要和 <code>output[library]</code> 对应起来，不然会报一个引用错误</li>
-<li>通过引入 <code>add-asset-html-webpack-plugin</code> 把已经打包的 js，通过 html 引入。注意不要和 <code>SpeedMeasurePlugin</code> 同时使用，会出错</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.js -- 打包成 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        library: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>] <span class="comment">// 要打包的库</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].dll.js'</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">'build/library'</span>),</span><br><span class="line">        library: <span class="string">'[name]'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            name: <span class="string">'[name]'</span>,</span><br><span class="line">            path: <span class="string">'./build/library/[name].manifest.json'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js -- 使用 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> AddAssetHtmlPlugin = <span class="built_in">require</span>(<span class="string">'add-asset-html-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123; <span class="comment">// 通过引用 .dll.js 中打包生成的 manifest,json 文件，来引用打包的库文件</span></span><br><span class="line">      manifest: <span class="built_in">require</span>(<span class="string">'./build/library/library.manifest.json'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(),</span><br><span class="line">    <span class="keyword">new</span> AddAssetHtmlPlugin(&#123; <span class="comment">// 把 .dll.js 文件添加到 html 中。注意！AddAssetHtmlPlugin 必须在 HtmlWebpackPlugin 后使用</span></span><br><span class="line">      filepath: path.resolve(<span class="string">'./build/library/*.dll.js'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用前：<br>
-<img src="/2020/01/14/webpack构建体积优化/dll-before.png" alt><br>
-使用后：<br>
-<img src="/2020/01/14/webpack构建体积优化/dll-after.png" alt><br>
-<img src="/2020/01/14/webpack构建体积优化/dll-build.png" alt><br>
-<img src="/2020/01/14/webpack构建体积优化/dll-html.png" alt></p>
-<p>可以看到，构建体积明显小了很多。</p>
-<h1 id="suo-xiao-gou-jian-mu-biao">缩小构建目标</h1>
-<p>可以通过减少构建的模块，来使构建体积、速度得到一定的优化，比如 <code>babel-loader</code> 不解析 <code>node_modules</code>：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="string">'node_modules'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="tu-pian-ya-suo">图片压缩</h1>
+<blockquote>
+<p><a href="https://github.com/tcoopman/image-webpack-loader" target="_blank" rel="noopener">Github - tcoopman/image-webpack-loader</a></p>
+</blockquote>
+<p>在 webpack 中，图片压缩使用的是 image-webpack-loader 。这个 loader 是基于 node 库 <code>imagemin</code> 实现的。</p>
+<p><code>imagemin</code> 能够处理多种图片格式，能够使用第三方优化插件，如 <code>pngquant</code>、<code>tinypng</code>、<code>pngcrush</code>、<code>optiopng</code> 等。</p>
+<h2 id="ya-suo-yuan-li"><a class="header-anchor" href="#压缩原理">¶</a>压缩原理</h2>
+<p><code>pngquant</code>：通过将 png 图像转换为具有 alpha 通道的8位 png 格式，显著减小文件大小。<br>
+<code>tinypng</code>：也是将 png 文件转化为8位 png 图片，同时剥离所有非必要的 metadata 信息。<br>
+<code>pngcrush</code>：通过尝试不同的压缩级别和 png 过滤方法来降低 png idat 数据流的大小。<br>
+<code>optiopng</code>：类似于 <code>pngcrush</code>，也是将 png 压缩为更小的尺寸。</p>
+<h2 id="shi-yong"><a class="header-anchor" href="#使用">¶</a>使用</h2>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i image-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line">rules: [&#123;</span><br><span class="line">  test: <span class="regexp">/\.(gif|png|jpe?g|svg)$/i</span>,</span><br><span class="line">  use: [</span><br><span class="line">    <span class="string">'file-loader'</span>,</span><br><span class="line">    &#123;</span><br><span class="line">      loader: <span class="string">'image-webpack-loader'</span>,</span><br><span class="line">      options: &#123;</span><br><span class="line">        mozjpeg: &#123;</span><br><span class="line">          progressive: <span class="literal">true</span>,</span><br><span class="line">          quality: <span class="number">65</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// optipng.enabled: false will disable optipng</span></span><br><span class="line">        optipng: &#123;</span><br><span class="line">          enabled: <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        pngquant: &#123;</span><br><span class="line">          quality: [<span class="number">0.65</span>, <span class="number">0.90</span>],</span><br><span class="line">          speed: <span class="number">4</span></span><br><span class="line">        &#125;,</span><br><span class="line">        gifsicle: &#123;</span><br><span class="line">          interlaced: <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// the webp option will enable WEBP</span></span><br><span class="line">        webp: &#123;</span><br><span class="line">          quality: <span class="number">75</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<p>具体参数说明参见 ：<a href="https://github.com/tcoopman/image-webpack-loader#options" target="_blank" rel="noopener">Options 说明</a></p>
+<h1 id="tree-shking">Tree Shking</h1>
+<p>Tree Shaking 可以去除代码中无用的 js 代码，具体用法可参考<a href="/2019/12/16/webpack%E4%B8%AD%E7%9A%84TreeShaking/">之前的文章</a></p>
+<h1 id="qu-chu-wu-yong-css">去除无用 CSS</h1>
+<p>Tree Shaking 可删除的是无用的 js 代码，但是对于 CSS 代码却无能为力。<br>
+无用的 CSS 代码，可使用 <code>PurifyCSS</code> 或 <code>uncss</code> 删除。<br>
+<code>PurifyCSS</code> 通过遍历代码，识别已经用到的 CSS class，进而删除无用 CSS 代码。<br>
+<code>uncss</code> 使用 jsdom 加载 HTML，并使用 PostCSS 加载样式表，然后通过 <code>document.querySelector</code> 识别出在 HTML 中没出现的选择器。</p>
+<p>由于 PurifyCSS 不再维护，所以在 webpack 中可以使用插件 <a href="https://github.com/FullHuman/purgecss-webpack-plugin" target="_blank" rel="noopener"><code>purgecss-webpack-plugin</code></a> 实现删除无用 CSS 代码的目的。<br>
+注意： purgecss-webpack-plugin 需要和 mini-css-extract-plugin 一同使用。</p>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i purgecss-webpack-plugin -D</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> glob = <span class="built_in">require</span>(<span class="string">'glob'</span>)</span><br><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">'mini-css-extract-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> PurgecssPlugin = <span class="built_in">require</span>(<span class="string">'purgecss-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> PATHS = &#123;</span><br><span class="line">  src: path.join(__dirname, <span class="string">'src'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          MiniCssExtractPlugin.loader,</span><br><span class="line">          <span class="string">"css-loader"</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">      filename: <span class="string">"[name].css"</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> PurgecssPlugin(&#123;</span><br><span class="line">      paths: glob.sync(<span class="string">`<span class="subst">$&#123;PATHS.src&#125;</span>/**/*`</span>,  &#123; <span class="attr">nodir</span>: <span class="literal">true</span> &#125;),</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="dong-tai-polyfill">动态 Polyfill</h1>
+<blockquote>
+<p>我们希望浏览器提供一些特性，但是没有，然后我们自己写一段代码来实现他，那这段代码就是 Polyfill。</p>
+</blockquote>
+<p>在 React 中，官方推荐使用 babel-polyfill，但是这个库存在一个问题，就是会把所有的 polyfill 都打包进去，存在体积较大的问题。</p>
+<p><a href="https://polyfill.io" target="_blank" rel="noopener">Polyfill.io</a> 提供了动态 polyfill 的功能，它会根据浏览器的UA不同，返回不一样的 polyfill，达到一个按需加载的作用。</p>
+<p>使用方法也很简单，在 html 文件中引入即可：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://polyfill.io/v3/polyfill.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://polyfill.io" target="_blank" rel="noopener">polyfill.io</a> 可以附加查询参数来定制 polyfill，具体可参照<a href="https://polyfill.io/v3/api/" target="_blank" rel="noopener">官方文档</a>。</p>
+]]></content>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
   </entry>
   <entry>
     <title>webpack构建速度优化</title>
     <url>/2020/01/11/webpack%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<p>本文介绍了几种优化 webpack 构建速度的方式。</p>
 <a id="more"></a>
+<h1 id="duo-jin-cheng">多进程</h1>
 <p>优化构建速度，可以通过多进程/多线程同时构建的方式来进行优化，目前主要有 <code>Happypack</code> / <code>thread-loader</code> / <code>parallel-webpack</code> 这几个解决方案。本文主要介绍了前两种方案。</p>
 <p>优化前的构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/before.png" alt></p>
-<h1 id="shi-yong-happypack">使用 Happypack</h1>
+<h2 id="shi-yong-happypack"><a class="header-anchor" href="#使用-happypack">¶</a>使用 Happypack</h2>
 <blockquote>
 <p><a href="https://github.com/amireh/happypack" target="_blank" rel="noopener">Github - amireh/happypack</a></p>
 </blockquote>
-<h2 id="yuan-li"><a class="header-anchor" href="#原理">¶</a>原理</h2>
+<h3 id="yuan-li"><a class="header-anchor" href="#原理">¶</a>原理</h3>
 <p>happypack 会创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给 happypack 的主进程，然后完成整个构建任务。参见下图：<br>
 <img src="/2020/01/11/webpack构建速度优化/HappyPack_Workflow.png" alt></p>
-<h2 id="an-zhuang-ji-shi-yong"><a class="header-anchor" href="#安装及使用">¶</a>安装及使用</h2>
+<h3 id="an-zhuang-ji-shi-yong"><a class="header-anchor" href="#安装及使用">¶</a>安装及使用</h3>
 <p>安装：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i happypack -D</span><br></pre></td></tr></table></figure>
 <p>使用：</p>
@@ -49,13 +73,13 @@
 <p>使用后构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/happypack.png" alt><br>
 可以看到，happypack 开启了三个线程进行构建，大幅度地缩减了构建时间。</p>
-<h1 id="thread-loader">thread-loader</h1>
+<h2 id="thread-loader"><a class="header-anchor" href="#thread-loader">¶</a>thread-loader</h2>
 <blockquote>
 <p><a href="https://github.com/webpack-contrib/thread-loader" target="_blank" rel="noopener">Github - webpack-contrib/thread-loader</a></p>
 </blockquote>
-<h2 id="yuan-li-1"><a class="header-anchor" href="#原理-v2">¶</a>原理</h2>
+<h3 id="yuan-li-1"><a class="header-anchor" href="#原理-v2">¶</a>原理</h3>
 <p>thread-loader 的原理与 happypack 类似，也是创建一个线程池，线程池会将构建任务里面的模块分配到不同线程上，各线程会去处理这个模块及其依赖。处理完成后，会将处理完成的资源传输给主进程，然后完成整个构建任务。</p>
-<h2 id="an-zhuang-ji-shi-yong-1"><a class="header-anchor" href="#安装及使用-v2">¶</a>安装及使用</h2>
+<h3 id="an-zhuang-ji-shi-yong-1"><a class="header-anchor" href="#安装及使用-v2">¶</a>安装及使用</h3>
 <p>安装：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i thread-loader -D</span><br></pre></td></tr></table></figure>
 <p>使用：</p>
@@ -63,18 +87,18 @@
 <p>使用后构建速度：<br>
 <img src="/2020/01/11/webpack构建速度优化/thread-loader.png" alt><br>
 可以看到，thread-loader 使用后也大幅度地缩减了构建时间。</p>
-<h1 id="duo-jin-cheng-bing-xing-ya-suo">多进程并行压缩</h1>
+<h2 id="duo-jin-cheng-bing-xing-ya-suo"><a class="header-anchor" href="#多进程并行压缩">¶</a>多进程并行压缩</h2>
 <p>并行压缩代码，有两种方式：</p>
 <ol>
 <li>使用 parallel-uglify-plugin 插件</li>
 <li>使用 terser-webpack-plugin 开启 parallel 参数</li>
 </ol>
-<h2 id="shi-yong-parallel-uglify-plugin-cha-jian"><a class="header-anchor" href="#使用-parallel-uglify-plugin-插件">¶</a>使用 parallel-uglify-plugin 插件</h2>
+<h3 id="shi-yong-parallel-uglify-plugin-cha-jian"><a class="header-anchor" href="#使用-parallel-uglify-plugin-插件">¶</a>使用 parallel-uglify-plugin 插件</h3>
 <blockquote>
 <p><a href="https://github.com/gdborton/webpack-parallel-uglify-plugin" target="_blank" rel="noopener">Github - gdborton/webpack-parallel-uglify-plugin</a></p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> ParallelUglifyPlugin = <span class="built_in">require</span>(<span class="string">'webpack-parallel-uglify-plugin'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> ParallelUglifyPlugin()</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><a class="header-anchor" href="#使用-terser-webpack-plugin-开启-parallel-参数">¶</a>使用 terser-webpack-plugin 开启 parallel 参数</h2>
+<h3 id="shi-yong-terser-webpack-plugin-kai-qi-parallel-can-shu"><a class="header-anchor" href="#使用-terser-webpack-plugin-开启-parallel-参数">¶</a>使用 terser-webpack-plugin 开启 parallel 参数</h3>
 <blockquote>
 <p><a href="https://github.com/webpack-contrib/terser-webpack-plugin" target="_blank" rel="noopener">Github - webpack-contrib/terser-webpack-plugin</a></p>
 </blockquote>
@@ -112,6 +136,23 @@
 第二次构建：<br>
 <img src="/2020/01/11/webpack构建速度优化/hard-source-second.png" alt></p>
 <p>可以看到，开启缓存后，优化效果明显。</p>
+<h1 id="yu-bian-yi-zi-yuan-mo-kuai">预编译资源模块</h1>
+<ol>
+<li>在 <code>npm run build</code> 构建之前，先把一些基础包和业务包打包成一个文件</li>
+<li>使用 <code>DllPlugin</code> 进行分包</li>
+<li><code>DllPlugin</code> 把基础包打包成一个文件，然后全局暴露一个变量，需要在 html 引入进来</li>
+<li><code>DllPlugin</code> 中的 <code>options[name]</code> 要和 <code>output[library]</code> 对应起来，不然会报一个引用错误</li>
+<li>通过引入 <code>add-asset-html-webpack-plugin</code> 把已经打包的 js，通过 html 引入。注意不要和 <code>SpeedMeasurePlugin</code> 同时使用，会出错</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.dll.js -- 打包成 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        library: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>] <span class="comment">// 要打包的库</span></span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">'[name].dll.js'</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">'build/library'</span>),</span><br><span class="line">        library: <span class="string">'[name]'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            name: <span class="string">'[name]'</span>,</span><br><span class="line">            path: <span class="string">'./build/library/[name].manifest.json'</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js -- 使用 dll</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"><span class="keyword">const</span> AddAssetHtmlPlugin = <span class="built_in">require</span>(<span class="string">'add-asset-html-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.DllReferencePlugin(&#123; <span class="comment">// 通过引用 .dll.js 中打包生成的 manifest,json 文件，来引用打包的库文件</span></span><br><span class="line">      manifest: <span class="built_in">require</span>(<span class="string">'./build/library/library.manifest.json'</span>)</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="keyword">new</span> HtmlWebpackPlugin(),</span><br><span class="line">    <span class="keyword">new</span> AddAssetHtmlPlugin(&#123; <span class="comment">// 把 .dll.js 文件添加到 html 中。注意！AddAssetHtmlPlugin 必须在 HtmlWebpackPlugin 后使用</span></span><br><span class="line">      filepath: path.resolve(<span class="string">'./build/library/*.dll.js'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用前：<br>
+<img src="/2020/01/11/webpack构建速度优化/dll-before.png" alt><br>
+使用后：<br>
+<img src="/2020/01/11/webpack构建速度优化/dll-after.png" alt><br>
+<img src="/2020/01/11/webpack构建速度优化/dll-build.png" alt><br>
+<img src="/2020/01/11/webpack构建速度优化/dll-html.png" alt></p>
+<p>可以看到，构建体积明显小了很多。</p>
 <h1 id="suo-xiao-gou-jian-mu-biao">缩小构建目标</h1>
 <p>可以通过减少构建的模块，来使构建速度得到一定的优化，比如 <code>babel-loader</code> 不解析 <code>node_modules</code>：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">        use: <span class="string">'babel-loader'</span>,</span><br><span class="line">        exclude: <span class="string">'node_modules'</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -125,7 +166,8 @@
 <li>使用 <code>alias</code>：模块位置</li>
 </ol>
 <p>如：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'react'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react/umd/react.production.min.js'</span>),</span><br><span class="line">      <span class="string">'react-dom'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react-dom/umd/react-dom.production.min.js'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'src'</span>), <span class="string">'node_modules'</span>],</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.jsx'</span>],</span><br><span class="line">    mainFields: [<span class="string">'main'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'react'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react/umd/react.production.min.js'</span>),</span><br><span class="line">      <span class="string">'react-dom'</span>: path.resolve(__dirname, <span class="string">'./node_modules/react-dom/umd/react-dom.production.min.js'</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'src'</span>), <span class="string">'node_modules'</span>],</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.jsx'</span>],</span><br><span class="line">    mainFields: [<span class="string">'main'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
       <tags>
         <tag>webpack</tag>
       </tags>
