@@ -246,17 +246,17 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/perfect-squares/">279. Perfect Squares</a></p>
 </blockquote>
-<h1 id="概述-v4"><a class="header-anchor" href="#概述-v4"></a>概述</h1>
+<h1 id="概述-v5"><a class="header-anchor" href="#概述-v5"></a>概述</h1>
 <p>本题目要求将一个给定的数<code>n</code>拆分为若干个平方数的和，求最小拆分数。</p>
 <span id="more"></span>
-<h1 id="思路-v4"><a class="header-anchor" href="#思路-v4"></a>思路</h1>
+<h1 id="思路-v5"><a class="header-anchor" href="#思路-v5"></a>思路</h1>
 <p>这个题目可以用动态规划来做。</p>
 <p>dp[i]代表组成i的最少平方数的个数，这个值最大就是它本身（看作都由1组成）。<br>
 而组成这个数的最小值要么就是本身，要么就是前面某一个数+一个平方数（所以看作值加上1）<br>
 所以状态转移方程为：<code>dp[i] = min(dp[i - j * j] + 1, dp[i])</code>（其中 j &lt; sqrt(i）)<br>
 有转移方程后代码就很好写了。</p>
 <p>这个题目还有另外一个解法，是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9B%9B%E5%B9%B3%E6%96%B9%E5%92%8C%E5%AE%9A%E7%90%86">四平方和定理</a>（好吧，我没听过，读者有兴趣可以自己研究下）</p>
-<h1 id="实现-v4"><a class="header-anchor" href="#实现-v4"></a>实现</h1>
+<h1 id="实现-v5"><a class="header-anchor" href="#实现-v5"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">n</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> numSquares = <span class="keyword">function</span>(<span class="params">n</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> dp = <span class="keyword">new</span> <span class="title class_">Array</span>(n + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        dp[i] = n;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        <span class="keyword">let</span> sqrt = <span class="title class_">Math</span>.<span class="title function_">floor</span>(<span class="title class_">Math</span>.<span class="title function_">sqrt</span>(i));</span><br><span class="line">        <span class="keyword">if</span>(sqrt * sqrt == i)&#123;</span><br><span class="line">            dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        dp[i] = n;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">1</span>; j &lt;= sqrt; j++)&#123;</span><br><span class="line">            dp[i] = <span class="title class_">Math</span>.<span class="title function_">min</span>(dp[i], dp[i - j * j] + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -343,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v4"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v4"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v4"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v5"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v5"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v5"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

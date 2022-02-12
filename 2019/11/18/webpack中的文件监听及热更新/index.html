@@ -260,7 +260,7 @@
 <h2 id="配置文件"><a class="header-anchor" href="#配置文件"></a>配置文件</h2>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 是否开启文件监听，默认false，即不开启</span></span><br><span class="line">    <span class="attr">watch</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 只有设置了 watch === true，watchOptions才有用</span></span><br><span class="line">    <span class="attr">watchOptions</span>: &#123;</span><br><span class="line">        <span class="comment">// 不监听的文件或文件夹，支持正则，默认为空</span></span><br><span class="line">        <span class="attr">ignored</span>: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        <span class="comment">// 监听到改变后的延时，默认300ms</span></span><br><span class="line">        <span class="attr">aggregateTimeout</span>: <span class="number">300</span>,</span><br><span class="line">        <span class="comment">// 轮询间隔，默认1000ms</span></span><br><span class="line">        <span class="attr">poll</span>: <span class="number">1000</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="热更新"><a class="header-anchor" href="#热更新"></a>热更新</h1>
-<h2 id="使用-v3"><a class="header-anchor" href="#使用-v3"></a>使用</h2>
+<h2 id="使用-v2"><a class="header-anchor" href="#使用-v2"></a>使用</h2>
 <p>热更新需要使用到插件<code>webpack-dev-server</code>(WDS)，WDS使用时需要配合插件<code>HotModuleReplacementPlugin</code>一起使用（这个插件会在配置<code>hot: true</code>自动添加，可以不手动添加）<br>
 首先，先安装WDS：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i webpack-dev-server -D</span><br></pre></td></tr></table></figure>
@@ -270,7 +270,7 @@
 <blockquote>
 <p>–open：在构建结束后自动打开浏览器</p>
 </blockquote>
-<h2 id="原理-v4"><a class="header-anchor" href="#原理-v4"></a>原理</h2>
+<h2 id="原理-v2"><a class="header-anchor" href="#原理-v2"></a>原理</h2>
 <p><img src="%E5%8E%9F%E7%90%86.png" alt=""></p>
 <ul>
 <li>webpack compiler: 将JS构建为Bundle</li>
@@ -377,7 +377,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">1.</span> <span class="nav-text">文件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">热更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-v3"><span class="nav-number">2.1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-v4"><span class="nav-number">2.2.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%91%E5%90%AC"><span class="nav-number">1.</span> <span class="nav-text">文件监听</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">热更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-v2"><span class="nav-number">2.1.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86-v2"><span class="nav-number">2.2.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
