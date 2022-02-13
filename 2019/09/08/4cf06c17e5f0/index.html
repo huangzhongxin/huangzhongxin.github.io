@@ -14,7 +14,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hzxin.top","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"hzxin.top","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="题目链接：28. 实现strStr()  概述 给定一个haystack字符串和一个needle字符串，在haystack字符串中找出needle字符串出现的第一个位置 (从0开始)。如果不存在，则返回-1。">
@@ -246,13 +246,13 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/description/">28. 实现strStr()</a></p>
 </blockquote>
-<h1 id="概述"><a class="header-anchor" href="#概述"></a>概述</h1>
+<h1 id="概述-v6"><a class="header-anchor" href="#概述-v6"></a>概述</h1>
 <p>给定一个<code>haystack</code>字符串和一个<code>needle</code>字符串，在<code>haystack</code>字符串中找出<code>needle</code>字符串出现的第一个位置 (从0开始)。如果不存在，则返回<code>-1</code>。</p>
 <span id="more"></span>
-<h1 id="思路"><a class="header-anchor" href="#思路"></a>思路</h1>
+<h1 id="思路-v6"><a class="header-anchor" href="#思路-v6"></a>思路</h1>
 <p>字符串匹配，有这么几种方法：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/BF%E7%AE%97%E6%B3%95">BF算法</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/xlxxcc/article/details/64125265">RK算法</a>、<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html">BM算法</a>、<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">KMP算法</a></p>
 <p>本文使用了最简单的BF算法，击败了90.34%的JavaScript提交记录。</p>
-<h1 id="实现"><a class="header-anchor" href="#实现"></a>实现</h1>
+<h1 id="实现-v6"><a class="header-anchor" href="#实现-v6"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">haystack</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">string</span>&#125; <span class="variable">needle</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> strStr = <span class="keyword">function</span>(<span class="params">haystack, needle</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (needle === <span class="string">&#x27;&#x27;</span> || needle === haystack) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> needleLen = needle.<span class="property">length</span></span><br><span class="line">    <span class="keyword">const</span> hayLen = haystack.<span class="property">length</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= hayLen - needleLen; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack.<span class="title function_">slice</span>(i, needleLen + i) === needle) &#123;</span><br><span class="line">            <span class="keyword">return</span> i</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -339,7 +339,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v6"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v6"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v6"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -416,6 +416,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

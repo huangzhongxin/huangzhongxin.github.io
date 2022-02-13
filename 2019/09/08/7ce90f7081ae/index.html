@@ -14,7 +14,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"hzxin.top","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"hzxin.top","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="题目链接：27. 移除元素  概述 给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。">
@@ -246,16 +246,16 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-element/description/">27. 移除元素</a></p>
 </blockquote>
-<h1 id="概述-v4"><a class="header-anchor" href="#概述-v4"></a>概述</h1>
+<h1 id="概述-v5"><a class="header-anchor" href="#概述-v5"></a>概述</h1>
 <p>给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。</p>
 <span id="more"></span>
-<h1 id="思路-v4"><a class="header-anchor" href="#思路-v4"></a>思路</h1>
+<h1 id="思路-v5"><a class="header-anchor" href="#思路-v5"></a>思路</h1>
 <p>解法与<a target="_blank" rel="noopener" href="http://localhost:4000/2019/09/08/LeetCode%E9%A2%98%E8%A7%A3-26-%E5%88%A0%E9%99%A4%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/">LeetCode题解|26. 删除排序数组中的重复项</a>类似。</p>
 <p>使用双指针<code>p1</code>、<code>p2</code>，其中<code>p1</code>是慢指针、<code>p2</code>是快指针。<br>
 如果<code>val === nums[p2]</code>，我们就增加<code>p2</code>跳过这个目标值<br>
 如果<code>val !== nums[p2]</code>，说明已经跳过了所有目标值，所以我们需要把<code>nums[p2]</code>的值复制到<code>nums[p1]</code>中，并把<code>p1</code>往后移动。<br>
 直到<code>p2 === nums.length</code>时，算法结束。</p>
-<h1 id="实现-v4"><a class="header-anchor" href="#实现-v4"></a>实现</h1>
+<h1 id="实现-v5"><a class="header-anchor" href="#实现-v5"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">val</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> removeElement = <span class="keyword">function</span>(<span class="params">nums, val</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> p1 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> p2 = <span class="number">0</span>; p2 &lt; nums.<span class="property">length</span>; p2++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (val !== nums[p2]) &#123;</span><br><span class="line">            nums[p1] = nums[p2]</span><br><span class="line">            p1++</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p1</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -342,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v4"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v4"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v4"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v5"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v5"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v5"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -419,6 +419,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
