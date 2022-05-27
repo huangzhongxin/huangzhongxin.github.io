@@ -1458,7 +1458,7 @@ Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路�
     <url>/2022/02/12/12b509e6174f/</url>
     <content><![CDATA[<p>本文介绍了浏览器渲染引擎的4种绘制图形系统的基础知识。</p>
 <span id="more"></span>
-<h1 id="概述-v15"><a class="header-anchor" href="#概述-v15"></a>概述</h1>
+<h1 id="概述"><a class="header-anchor" href="#概述"></a>概述</h1>
 <p>简单来说，可视化就是将数据信息组织起来，以图形的方式呈现出来。现代浏览器中负责绘制图形的部分是渲染引擎。其绘制方式大体可分为4种：</p>
 <ol>
 <li>传统的<strong>HTML + CSS</strong>。</li>
@@ -1506,7 +1506,7 @@ Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路�
 <h3 id="Canvas元素"><a class="header-anchor" href="#Canvas元素"></a>Canvas元素</h3>
 <p>对于浏览器而言，Canvas也是一个HTML元素，直接使用 <code>canvas</code> 标签插入到HTML内即可</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">width</span>=<span class="string">&quot;512&quot;</span> <span class="attr">height</span>=<span class="string">&quot;512&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这里有一点需要注意的是，Canvas元素上的<code>width</code>与<code>height</code>属性与CSS样式里的属性不完全相同。CSS中的宽高影响的是Canvas在页面上的显示大小（下文称为<strong>样式宽高</strong>），Canvas元素上的<code>width</code>与<code>height</code>属性影响的是Canvas中的坐标系（下文称为<strong>画布宽高</strong>）。如果画布宽高，则默认为<code>300*150</code>。如果未设置样式宽高，则样式宽高默认等于画布宽高。</p>
+<p>这里有一点需要注意的是，Canvas元素上的<code>width</code>与<code>height</code>属性与CSS样式里的属性不完全相同。CSS中的宽高影响的是Canvas在页面上的显示大小（下文称为<strong>样式宽高</strong>），Canvas元素上的<code>width</code>与<code>height</code>属性影响的是Canvas中的坐标系（下文称为<strong>画布宽高</strong>）。如果未设置画布宽高，则默认为<code>300*150</code>。如果未设置样式宽高，则样式宽高默认等于画布宽高。</p>
 <p>在上述这段代码中，这个Canvas的样式宽高就是 <code>512px * 512px</code>。</p>
 <p>如果我们通过CSS设置了其宽高，比如我们设置为<code>256px</code>，那么画布宽高就是样式宽高的两倍了：</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">canvas</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">256px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">256px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1529,7 +1529,7 @@ Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路�
 <h2 id="Canvas2D与SVG的对比"><a class="header-anchor" href="#Canvas2D与SVG的对比"></a>Canvas2D与SVG的对比</h2>
 <p>在实现效果上，SVG与Canvas差别不大，在使用上的不同点可以分成两方面，一是<strong>写法上的不同</strong>，二是<strong>用户交互实现上的不同</strong>。</p>
 <h3 id="写法上的不同"><a class="header-anchor" href="#写法上的不同"></a>写法上的不同</h3>
-<p>前文有说到，SVG是一种<strong>声明式</strong>绘图系统，而Canvas是一种<strong>指令式</strong>绘图系统。具体而言，SVG 首先通过创建标签来表示图形元素，<code>circle</code> 表示圆，<code>g</code> 表示分组，<code>text</code> 表示文字等等。接着，SVG 通过元素的 <code>setAttribute</code> 给图形元素赋属性值，这个和操作 HTML 元素是一样的。而 Canvas 先是通过上下文执行绘图指令来绘制图形，画圆是调用 <code>context.arc</code> 指令，然后再调用 <code>context.fill</code> 绘制，画文字是调用 <code>context.fillText</code> 指令。另外，Canvas 还通过上下文设置状态属性，<code>context.fillStyle</code> 设置填充颜色，<code>conext.font</code> 设置元素的字体。我们设置的这些状态，在绘图指令执行时才会生效。</p>
+<p>前文有说到，SVG是一种<strong>声明式</strong>绘图系统，而Canvas是一种<strong>指令式</strong>绘图系统。具体而言，SVG 首先通过创建标签来表示图形元素，<code>circle</code> 表示圆，<code>g</code> 表示分组，<code>text</code> 表示文字等等。接着，SVG 通过元素的 <code>setAttribute</code> 给图形元素赋属性值，这个和操作 HTML 元素是一样的。而 Canvas 先是通过上下文执行绘图指令来绘制图形，画圆是调用 <code>context.arc</code> 指令，然后再调用 <code>context.fill</code> 绘制，画文字是调用 <code>context.fillText</code> 指令。另外，Canvas 还通过上下文设置状态属性，<code>context.fillStyle</code> 设置填充颜色，<code>context.font</code> 设置元素的字体。我们设置的这些状态，在绘图指令执行时才会生效。</p>
 <h3 id="用户交互实现上的不同"><a class="header-anchor" href="#用户交互实现上的不同"></a>用户交互实现上的不同</h3>
 <p>因为SVG中，一个图形对应一个svg元素，同时SVG也支持CSS样式，所以当我们需要在SVG上增加一些鼠标事件的时候是很方便的。比如，我们需要在鼠标hover某个元素的时候，将这个元素的背景色进行高亮，并且获取这个元素的一些信息，那么我们就可以用如下代码实现：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">circle</span> <span class="attr">id</span>=<span class="string">&quot;circle&quot;</span> <span class="attr">cx</span>=<span class="string">&quot;100&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;orange&quot;</span> <span class="attr">data-title</span>=<span class="string">&quot;circle&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1637,7 +1637,7 @@ Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路�
 <img src="webgl_varying_result.png" alt=""></p>
 <p>可以发现，三个顶点中间像素点的颜色是均匀过渡的。这是因为 WebGL 在执行片元着色器程序的时候，顶点着色器传给片元着色器的变量，会根据片元着色器的像素坐标对变量进行<strong>线性插值</strong>。</p>
 <p>详细的WebGL教程，可以查看<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API">MDN的官方文档</a>。</p>
-<h1 id="参考-v5"><a class="header-anchor" href="#参考-v5"></a>参考</h1>
+<h1 id="参考"><a class="header-anchor" href="#参考"></a>参考</h1>
 <p><a href="https://time.geekbang.org/column/intro/100053801?tab=catalog">极客时间 - 跟月影学可视化</a><br>
 <a href="https://github.com/lesnitsky/webgl-month">Github - lesnitsky/webgl-month</a><br>
 <a href="https://xie.infoq.cn/article/511aa64f69530ed3061829351">入门 WebGL，看这一篇就够了</a></p>
@@ -1850,6 +1850,18 @@ Node.js 中，<code>__dirname</code>总是指向被执行 js 文件的绝对路�
       <tags>
         <tag>同源策略</tag>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>可视化 - 数学基础</title>
+    <url>/2022/05/27/40482e3237dd/</url>
+    <content><![CDATA[<p>本文介绍了可视化中涉及到的一些数学基础知识。</p>
+<span id="more"></span>
+<h1 id="概述-v2"><a class="header-anchor" href="#概述-v2"></a>概述</h1>
+]]></content>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>可视化</tag>
       </tags>
   </entry>
 </search>
