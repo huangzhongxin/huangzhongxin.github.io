@@ -10,7 +10,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -246,17 +246,17 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/flip-binary-tree-to-match-preorder-traversal/">971. Flip Binary Tree To Match Preorder Traversal</a></p>
 </blockquote>
-<h1 id="概述-v12"><a class="header-anchor" href="#概述-v12"></a>概述</h1>
+<h1 id="概述-v13"><a class="header-anchor" href="#概述-v13"></a>概述</h1>
 <p>这个题目给定了一棵有<code>N</code>个节点的二叉树以及一个序列<code>v</code>，问如何翻转最少的节点（交换左右子树），使得前序遍历结果和给定的序列一致。</p>
 <span id="more"></span>
-<h1 id="思路-v12"><a class="header-anchor" href="#思路-v12"></a>思路</h1>
+<h1 id="思路-v13"><a class="header-anchor" href="#思路-v13"></a>思路</h1>
 <p>使用<code>DFS</code>前序遍历这棵树，并且使用一个指针<code>i</code>，记录当前节点<code>node</code>应该和<code>v</code>中的哪个值相等，<code>DFS</code>时，可分为以下三种情况：</p>
 <ol>
 <li><code>node === null</code>，说明我们已经遍历完了，返回<code>true</code></li>
 <li><code>node.val !== v[i]</code>，说明该节点值不是预期的，返回<code>false</code></li>
 <li><code>node.left.!== null &amp;&amp; node.left.val !== v[i]</code>，说明左儿子存在但是其值并不是预期的，此时，我们应该翻转<code>node</code>节点，但是我们并不需要真的去修改指针，只要先去遍历右子树，再去遍历左子树，即可达到翻转并且前序遍历的目的。</li>
 </ol>
-<h1 id="实现-v12"><a class="header-anchor" href="#实现-v12"></a>实现</h1>
+<h1 id="实现-v13"><a class="header-anchor" href="#实现-v13"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * function TreeNode(val) &#123;</span></span><br><span class="line"><span class="comment"> *     this.val = val;</span></span><br><span class="line"><span class="comment"> *     this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">TreeNode</span>&#125; <span class="variable">root</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">voyage</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number[]</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> flipMatchVoyage = <span class="keyword">function</span>(<span class="params">root, voyage</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> result = [];</span><br><span class="line">    <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> dfs = <span class="keyword">function</span>(<span class="params">node</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.<span class="property">val</span> != voyage[i++])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.<span class="property">left</span> != <span class="literal">null</span> &amp;&amp; node.<span class="property">left</span>.<span class="property">val</span> != voyage[i])&#123;</span><br><span class="line">            result.<span class="title function_">push</span>(node.<span class="property">val</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">dfs</span>(node.<span class="property">right</span>) &amp;&amp; <span class="title function_">dfs</span>(node.<span class="property">left</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">dfs</span>(node.<span class="property">left</span>) &amp;&amp; <span class="title function_">dfs</span>(node.<span class="property">right</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">dfs</span>(root) ? result : [-<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -343,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v12"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v12"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v12"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v13"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v13"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v13"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -418,8 +418,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

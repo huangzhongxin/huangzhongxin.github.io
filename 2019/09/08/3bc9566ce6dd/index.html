@@ -10,7 +10,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -246,16 +246,16 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/description/">26. 删除排序数组中的重复项</a></p>
 </blockquote>
-<h1 id="概述-v4"><a class="header-anchor" href="#概述-v4"></a>概述</h1>
+<h1 id="概述"><a class="header-anchor" href="#概述"></a>概述</h1>
 <p>题目给定一个排序数组，需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。</p>
 <span id="more"></span>
-<h1 id="思路-v4"><a class="header-anchor" href="#思路-v4"></a>思路</h1>
+<h1 id="思路"><a class="header-anchor" href="#思路"></a>思路</h1>
 <p>使用双指针<code>p1</code>、<code>p2</code>，其中<code>p1</code>是慢指针、<code>p2</code>是快指针。<br>
 如果<code>nums[p1] === nums[p2]</code>，我们就增加<code>p2</code>跳过重复项<br>
 如果<code>nums[p1] !== nums[p2]</code>，说明已经跳过了所有重复项，所以我们需要把<code>nums[p2]</code>的值复制到<code>nums[p1 + 1]</code>中，并把<code>p1</code>往后移动。<br>
 直到<code>p2 === nums.length</code>时，算法结束。<br>
 因为<code>p1</code>指向的是不重复项的最后一个，因此，最终的数组长度就是<code>p1 + 1</code>。</p>
-<h1 id="实现-v4"><a class="header-anchor" href="#实现-v4"></a>实现</h1>
+<h1 id="实现"><a class="header-anchor" href="#实现"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">nums</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">number</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> removeDuplicates = <span class="keyword">function</span>(<span class="params">nums</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums.<span class="property">length</span> &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> nums.<span class="property">length</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> p1 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> p2 = <span class="number">0</span>; p2 &lt; nums.<span class="property">length</span>; p2++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[p1] !== nums[p2]) &#123;</span><br><span class="line">            p1++</span><br><span class="line">            nums[p1] = nums[p2]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p1 + <span class="number">1</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -342,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v4"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v4"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v4"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -417,8 +417,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>

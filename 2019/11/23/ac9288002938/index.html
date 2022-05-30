@@ -10,7 +10,7 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
@@ -256,7 +256,7 @@
 <h1 id="什么是文件指纹"><a class="header-anchor" href="#什么是文件指纹"></a>什么是文件指纹</h1>
 <p>所谓的文件指纹就是一个hash值（或hash值的一部分），我们可以通过文件指纹来实现前端资源的增量更新。具体而言，就是在资源名上添加一段hash值，通过浏览器的缓存策略，实现未改动的资源不重复下载。比如<a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/quickstart">Element UI官网</a>中，就有使用到文件指纹：<br>
 <img src="ele-demo.png" alt=""></p>
-<h1 id="使用-v2"><a class="header-anchor" href="#使用-v2"></a>使用</h1>
+<h1 id="使用"><a class="header-anchor" href="#使用"></a>使用</h1>
 <p>在webpack中，我们可以通过配置<code>output</code>的<code>filename</code>字段，来控制输出的文件名。因此，我们可以在这边加上<code>[hash]</code>等<a target="_blank" rel="noopener" href="https://www.webpackjs.com/configuration/output/#output-filename">占位符</a>，来实现文件指纹。<br>
 例如，我们配置<code>webpack.config.js</code>内容如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: &#123;</span><br><span class="line">    <span class="attr">vendor</span>: <span class="string">&#x27;./src/vendor.js&#x27;</span>,</span><br><span class="line">    <span class="attr">index</span>: <span class="string">&#x27;./src/index.js&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">output</span>: &#123;</span><br><span class="line">    <span class="attr">path</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;[name].[hash].js&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -376,7 +376,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9"><span class="nav-number">1.</span> <span class="nav-text">什么是文件指纹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-v2"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hash"><span class="nav-number">2.1.</span> <span class="nav-text">[hash]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chunkhash"><span class="nav-number">2.2.</span> <span class="nav-text">[chunkhash]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contenthash"><span class="nav-number">2.3.</span> <span class="nav-text">[contenthash]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83-v4"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E6%8C%87%E7%BA%B9"><span class="nav-number">1.</span> <span class="nav-text">什么是文件指纹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hash"><span class="nav-number">2.1.</span> <span class="nav-text">[hash]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chunkhash"><span class="nav-number">2.2.</span> <span class="nav-text">[chunkhash]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%B3%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contenthash"><span class="nav-number">2.3.</span> <span class="nav-text">[contenthash]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">3.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83-v4"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -451,8 +451,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
