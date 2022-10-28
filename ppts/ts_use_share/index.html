@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset=UTF-8><title>TypeScript 使用分享 - By 黄种鑫</title><link rel=stylesheet href=https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css><link rel=stylesheet href=https://cdn.staticfile.org/prism/1.15.0/themes/prism.min.css><link rel=stylesheet href=https://cdn.staticfile.org/KaTeX/0.10.0-rc.1/katex.min.css><link rel=stylesheet href=https://cdn.staticfile.org/KaTeX/0.5.1/katex.min.css><link href=./css/chunk-vendors.4e4765ff.css rel=stylesheet></head><body><div><article id=webslides><section slide class="slide bg-black-blue aligncenter" image="https://source.unsplash.com/C1HhAQrbykQ/ .light"><span class="background light" style="background-image:url('https://source.unsplash.com/C1HhAQrbykQ/')"></span><div class=wrap wrap=true><h1 class=text-shadow>TypeScript 使用分享</h1><p class=text-intro>By 黄种鑫</p><p>2022.10.31</p></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>目录</h2><hr><ul><li class="animated fadeInUp">是什么</li><li class="animated fadeInUp">为什么</li><li class="animated fadeInUp">怎么样</li></ul></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>是什么</h2><hr><blockquote><p>TypeScript is <strong>JavaScript with syntax for types.</strong></p></blockquote></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h2>为什么</h2><hr><h4>优点：</h4><ol><li>强静态类型</li><li>及时发现代码BUG</li><li>IDE支持更完善</li><li>方便重构</li></ol></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>几个小案例</h2><hr></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>1. interface</h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">interface</span> <span class="token class-name"><span class="token constant">A</span></span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>1.1. interface - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnIBGcUAXMgM5hSgDm+yA2qACYQAe5IArgLaHQAulz4CoDRhXIUAnv3QAbYch79oEgNbTqdZVRoh6AXyA target=_blank>索引签名</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">interface</span> <span class="token class-name">MyArray</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span>index<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+</code></pre><h4>作用？</h4><ol><li>可以用于声明一个指定类型的数组，类似于 <code>Array&lt;number&gt;</code></li><li>具有动态键名，但值类型一致</li></ol></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>1.2. interface - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnIBGcUAXMgM5hSgDm+yA2qACYQAe5IArgLaHQAulz4CoDRhXIUAnv3QAbYch79oEgNbTqdZVRoh6AXyA target=_blank>声明合并</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">interface</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+  foo<span class="token operator">:</span> <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+  bar<span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+</code></pre><h4>作用？</h4><ol><li>补充三方库的类型声明</li></ol></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>1.3. interface - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnIAUAlAFzIBu6wAJsgPT3KC-ioA6m+yARnFAPzkBnMFFABzDjACuIEuSq0A3LgC+uXAnQghyGJmQBeHdIRhgmosRzJlyOALSZcu9ADpuUA8gDkARgBMAMxeTpguUiCe4SZmESRWqrhAA target=_blank>混合类型</a></h3><hr><h4>作用？</h4><ol><li>充分发挥JavaScript动态灵活的特点，使一个对象可以同时具有多种类型</li></ol></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>2. keyof</h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">interface</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+    bar<span class="token operator">:</span> <span class="token builtin">string</span>
+    baz<span class="token operator">:</span> <span class="token builtin">number</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Key</span> <span class="token operator">=</span> <span class="token keyword">keyof</span> Foo <span class="token comment">// 'bar' | 'baz'</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>2.1. keyof - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgCJzHZBvAUM5EOAWwgC5kBnMKUAc32QQAs4AHSKAfWABMLqtEAwLMIcXtC4BXPhRDTiAI2i4AvrlwIA9iGrJd6TAGFWwlAF5kAHgDSyCAA9IIXpWQBrCAE9tMNBhwAHwAFF7eFLYANMgAbnAANhRGcADatgC6AJTIFkE4mhq4hoGmcOYhAOREpJUxlQCMlVnFICllFdUkEHXIDS1AA target=_blank>实例1</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">const</span> onDataChange <span class="token operator">=</span> <span class="token operator">&lt;</span><span class="token constant">K</span> <span class="token keyword">extends</span> <span class="token keyword">keyof</span> Data<span class="token operator">></span><span class="token punctuation">(</span>key<span class="token operator">:</span> <span class="token constant">K</span><span class="token punctuation">,</span> val<span class="token operator">:</span> Data<span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>2.2. keyof - <a href=https://www.typescriptlang.org/play?#code/C4TwDgpgBAsiAKBDATsAlogNgHgCoD4oBeKAbwCgooBtAaSjQDsoBrCEAewDMpcBdAPwAuXnT7kAvuVCRYIAEoREAEw6NMIPIRIUqyJavUga9Jq3bdefEbjGTy5JsAjIuiAMbQAIomCIylFCMiAC2ECIAzsDITADmge4AFohgzsgA+mjKkdFxgYkGLukArlkijMUhAEYu9tLg0EioGJg+fsRyTehY2G2I+PWyiipqGn0dcMOGGr2+-Q7ualFQynMiXS3jOlLki4zL+iNGfSJToyBbAVTBYSIA5HcANAnJqUVlUA-PVAUqRaXZKAARnsh2mFzmADobtASHcYXdyEA target=_blank>实例2</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">type</span> <span class="token class-name">MyPartial<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> <span class="token keyword">keyof</span> <span class="token constant">T</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre><pre class=language-typescript><code class=language-typescript><span class="token keyword">type</span> <span class="token class-name">MyReadonly<span class="token operator">&lt;</span><span class="token constant">T</span><span class="token operator">></span></span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token keyword">readonly</span> <span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> <span class="token keyword">keyof</span> <span class="token constant">T</span><span class="token punctuation">]</span><span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>3. 函数重载 - <a href=https://www.typescriptlang.org/play?#code/MYGwhgzhAECqBKBJaBvAUNaECmYBOwAFgBQBuAXNAEYD2NIuAdgJSUAK+ALgJZggA88bMBp4AJvwic83RgHMANNDCMAngD51qDJmh5snAK55GqAL46LFtAHob0QO3BgNeVAp+aAj6MBDyoAdTNADNDjMA8NKZyBgCKhth4qsSs0EIi4pLSsopYqfLqfgFB3CHQYZyR0bEA1tiqlFIy8vE1adAAPtABYti+sthiOYHBoRFRMcQVqgD81Zly9VPNrYztnYzdc4miEg3ySptyWuiYIoxSrTLQALzQywDucEhxOofHOPhE5yfcAHTPBCTSUcxoHT6IwmaCjaBjLC4H4AbVGAF1oNVoUQ0NZHpxoABHACMbyKJWGAIx2IATPjBqViAByUbUgFAA target=_blank>实例</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token keyword">function</span> <span class="token function">getQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">></span>
+<span class="token keyword">function</span> <span class="token function">getQuery</span><span class="token punctuation">(</span>key<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span>
+<span class="token keyword">function</span> <span class="token function">getQuery</span><span class="token punctuation">(</span>key<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span> <span class="token operator">|</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> <span class="token builtin">string</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> uri <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token constant">URI</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> search <span class="token operator">=</span> uri<span class="token punctuation">.</span><span class="token function">search</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> key <span class="token operator">?</span> search<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">:</span> search
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>4. never - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgMLCggNig3gKGWTAE8AHCALmQHIENsIbDko4ATYAVwGdqQuAWwBG0fAF98+UJFiIUAGVB4WpCtRpZlzIjhABzMAAt+Q0VAlS1KAMpG4FZAF40DHMgA+yJSAhSEAPYgPGDI7AE2xs7IABQ89urIdg4QAJTOAHzIBEQ8AO7AYAhGcQkQAHTW6TlEyAhwPCh0bkyULLXIAPSdyPEpyID0Zq6YOO21wlAQcADWY-WNtFq+NG0dRN29ZYPeymNEE1OzHewQ8FxYYKtrG32OQ74AbmJrdUEhyAAe-BBPUNG3fheBxmLEkkiAA target=_blank>实例</a></h3><hr><pre class=language-typescript><code class=language-typescript><span class="token comment">// 完备性检验</span>
+<span class="token keyword">switch</span><span class="token punctuation">(</span>val<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token string">'circle'</span><span class="token operator">:</span>
+        <span class="token comment">// val 是 Circle</span>
+        <span class="token keyword">break</span>
+    <span class="token keyword">case</span> <span class="token string">'line'</span><span class="token operator">:</span>
+        <span class="token comment">// val 是 Line</span>
+        <span class="token keyword">break</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token comment">// val 是 never</span>
+        <span class="token keyword">const</span> x<span class="token operator">:</span> <span class="token builtin">never</span> <span class="token operator">=</span> val
+        <span class="token keyword">break</span>
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>5. 类型守卫 - <a href=https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgIImAWzgG2QbwCgBfQw0SWRFAEQHsBzZCAD0hABMBnNDbPIsmQAjOFADWALmQAKAJTIAvAD5kANzrAOJMhWjwkyAAoQ6ABxwpW7bryy4ChIVzMQ4U2QpXrN20oTAAT1dkABkIBnR7PEVkeiYAH2NTCwgyAHp05EB-eUAKV2RQZEASJUBa00IEOhAuMGQYAFcQBABGJVk4PlxpcMiOnC9VQQKYWQByFzdxEYKQZHbohUGhOf4AOnH3eSdkUn8EHDguHhNzSwBhHB4sVMwIcCOUy0dnVw2FnYysvOnq9qQ6YdK5Uq1VqDQQACZWjJlp0whEovx+k8hm1et8wL9TMNjqlzlwFlslr01i9xJshO9CJlkIAwHWmyEAIW6lQALxoA15UADEqAX8VAA6mgFo5PJAqo1dbiACSM1iMjUsO6CNwSLGpKmhWlODIFSFoMaTTMUJhOC68N6SMGwGGMhF4uhxoJQiJ0RJE3J2x0Hxy+UA3j6AaPVAMgxgFnonmCkHALg4x6S1WGnrzaSqgr3E4obyKibKmaq9XAmr1Rp63pRuV9JQDLZm2QhsMQa3zW12-WO15bd5AA target=_blank>实例</a></h3><hr></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>参考</h2><ul><li><a href=https://www.typescriptlang.org/docs/handbook/intro.html target=_blank>TypeScript Handbook</a></li><li><a href=https://github.com/type-challenges/type-challenges target=_blank>Github - type-challenges</a></li></ul></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h1 class="text-landing text-shadow">感谢聆听~</h1><p class=text-intro>By 黄种鑫</p></div></section></article></div><script src=https://cdn.staticfile.org/echarts/4.8.0/echarts.min.js></script><script>window.pluginsOptions = {}
+
+
+
+    window.webslidesOptions = {}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    let isPrintMode = false;
+    if(~location.search.indexOf('print-pdf')){
+        isPrintMode = true;
+        WebSlides.registerPlugin('scroll', function(){});
+    }
+    const wsOptions = {
+        loop: false
+    };
+    if(window.webslidesOptions){
+        for (let i in webslidesOptions){
+            if(webslidesOptions.hasOwnProperty(i)){
+                wsOptions[i] = webslidesOptions[i];
+            }
+        }
+    }
+    const ws = new WebSlides(wsOptions)
+
+    window.wsInstance = ws;
+    if(isPrintMode){
+        ws.slides.forEach(s=>s.show())
+    }
+}, false)</script><script src=./js/chunk-vendors.js></script><script src=./js/ts-intro.js></script></body></html>
