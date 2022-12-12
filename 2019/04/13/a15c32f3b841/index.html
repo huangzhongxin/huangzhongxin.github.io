@@ -246,10 +246,10 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/convert-to-base-2/">1017. Convert to Base -2</a></p>
 </blockquote>
-<h1 id="概述-v3"><a class="header-anchor" href="#概述-v3"></a>概述</h1>
+<h1 id="概述"><a class="header-anchor" href="#概述"></a>概述</h1>
 <p>这个题目要求很简单，就是实现一个十进制到负二进制的转换。</p>
 <span id="more"></span>
-<h1 id="思路-v3"><a class="header-anchor" href="#思路-v3"></a>思路</h1>
+<h1 id="思路"><a class="header-anchor" href="#思路"></a>思路</h1>
 <p>在实现前，先回顾下进制转换的方法：<strong>除k取余法</strong></p>
 <p>以十进制下的<code>N = 5</code>转为二进制为例：<br>
 第一步：5整除2，商为2，余1；<br>
@@ -263,7 +263,7 @@
 <p>因此，在求余数的时候，我们只要使用<code>N &amp; 1</code>即可。完整的二进制转换代码如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">N</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> base2 = <span class="keyword">function</span>(<span class="params">N</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(N == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> remainders = [];</span><br><span class="line">    <span class="keyword">while</span>(N != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> x = N &amp; <span class="number">1</span>;</span><br><span class="line">        remainders.<span class="title function_">push</span>(x);</span><br><span class="line">        N = N &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> remainders.<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>前面举的例子都是二进制的，那负二进制呢？类似的，我们在转换为负二进制时，只需要将除数改为<code>-2</code>即可。</p>
-<h1 id="实现-v3"><a class="header-anchor" href="#实现-v3"></a>实现</h1>
+<h1 id="实现"><a class="header-anchor" href="#实现"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number</span>&#125; <span class="variable">N</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">string</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> baseNeg2 = <span class="keyword">function</span>(<span class="params">N</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(N == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;0&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> remainders = [];</span><br><span class="line">    <span class="keyword">while</span>(N != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">var</span> x = N &amp; <span class="number">1</span>;</span><br><span class="line">        remainders.<span class="title function_">push</span>(x);</span><br><span class="line">        N = -(N &gt;&gt; <span class="number">1</span>); <span class="comment">// 注意这里多了个负号</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> remainders.<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -350,7 +350,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v3"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v3"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v3"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -399,6 +399,8 @@
         
 
         
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">闽ICP备2022018271号-1 </a>
+  </div>
 
 <div class="copyright">
   
