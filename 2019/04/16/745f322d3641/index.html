@@ -246,10 +246,10 @@
         <blockquote>
 <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode.com/problems/global-and-local-inversions/">775. Global and Local Inversions</a></p>
 </blockquote>
-<h1 id="概述-v9"><a class="header-anchor" href="#概述-v9"></a>概述</h1>
+<h1 id="概述-v12"><a class="header-anchor" href="#概述-v12"></a>概述</h1>
 <p>题目给定一个长度为<code>N</code>的数组<code>A</code>，为<code>[0, 1, ..., N - 1]</code>的一种排列。<code>全局倒置</code>指的是 <code>i,j</code> 满足 <code>0 &lt;= i &lt; j &lt; N 并且 A[i] &gt; A[j]</code> ，<code>局部倒置</code>指的是<code>i</code>满足 <code>0 &lt;= i &lt; N 并且 A[i] &gt; A[i+1]</code> 。问该数组的全局倒置是否等于局部倒置。</p>
 <span id="more"></span>
-<h1 id="思路-v9"><a class="header-anchor" href="#思路-v9"></a>思路</h1>
+<h1 id="思路-v12"><a class="header-anchor" href="#思路-v12"></a>思路</h1>
 <p>这个问题暴力求解也很好办，按照题目要求扫描下数组即可。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">A</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isIdealPermutation = <span class="keyword">function</span>(<span class="params">A</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> local = <span class="number">0</span>,</span><br><span class="line">        <span class="variable language_">global</span> = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; A.<span class="property">length</span> - <span class="number">1</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(A[i] &gt; A[i + <span class="number">1</span>])&#123;</span><br><span class="line">            local++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; A.<span class="property">length</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = i + <span class="number">1</span>; j &lt; A.<span class="property">length</span>; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(A[i] &gt; A[j])&#123;</span><br><span class="line">                <span class="variable language_">global</span>++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">global</span> === local;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这段代码的时间复杂度为 O(n<sup>2</sup>)，只能beat 30%，有点慢。考虑下优化。</p>
@@ -262,7 +262,7 @@
 假设<code>存在k &gt; 1，使得A[i] &gt; A[i + k]成立</code>，<br>
 则 <code>A[i] != i 且 A[i] &gt; i + 1 或 A[i] &lt; i - 1</code>，即<code>|A[i]-i| &gt; 1</code>。</p>
 <p>因此，只要遍历一遍数组即可得到答案。</p>
-<h1 id="实现-v9"><a class="header-anchor" href="#实现-v9"></a>实现</h1>
+<h1 id="实现-v12"><a class="header-anchor" href="#实现-v12"></a>实现</h1>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> &#123;<span class="type">number[]</span>&#125; <span class="variable">A</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> &#123;<span class="type">boolean</span>&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isIdealPermutation = <span class="keyword">function</span>(<span class="params">A</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; A.<span class="property">length</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="title class_">Math</span>.<span class="title function_">abs</span>(A[i] - i) &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><a href="/2019/04/13/LeetCode%E9%A2%98%E8%A7%A3%E9%9B%86%E5%90%88/">题解合集</a></p>
 
@@ -349,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v9"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v9"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v9"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-v12"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-v12"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-v12"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -404,7 +404,7 @@
 <div class="copyright">
   
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-star"></i>
   </span>

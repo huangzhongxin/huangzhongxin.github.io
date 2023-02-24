@@ -1,0 +1,122 @@
+<!doctype html><html><head><meta charset=UTF-8><title>ESLint 机制分析与简单插件实践 - By 黄种鑫</title><link rel=stylesheet href=https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css><link rel=stylesheet href=https://cdn.staticfile.org/prism/1.15.0/themes/prism.min.css><link rel=stylesheet href=https://cdn.staticfile.org/KaTeX/0.10.0-rc.1/katex.min.css><link href=./css/chunk-vendors.4e4765ff.css rel=stylesheet></head><body><div><article id=webslides><section slide class="slide bg-black-blue aligncenter" image="https://source.unsplash.com/C1HhAQrbykQ/ .light"><span class="background light" style="background-image:url('https://source.unsplash.com/C1HhAQrbykQ/')"></span><div class=wrap wrap=true><h1 class=text-shadow>ESLint 机制分析与简单插件实践</h1><p class=text-intro>By 黄种鑫</p><p>2023.02</p></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>目录</h2><hr><ul><li class="animated fadeInUp">是什么</li><li class="animated fadeInUp">怎么用</li><li class="animated fadeInUp">怎么生效的</li><li class="animated fadeInUp">写个插件</li><li class="animated fadeInUp">流程分析</li></ul></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>是什么</h2><hr><blockquote><p>ESLint 是一个根据方案识别并报告 JavaScript 代码问题的工具，其目的是<strong>使代码风格更加一致并避免错误。</strong></p></blockquote></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h2>怎么用</h2><hr><p><a href=https://zh-hans.eslint.org/docs/latest/user-guide/configuring/configuration-files target=_blank>文档</a></p><pre class=language-json><code class=language-json><span class="token punctuation">{</span>
+    <span class="token property">"extends"</span><span class="token operator">:</span> ''<span class="token punctuation">,</span> <span class="token comment">// 规则集继承自某个规则集</span>
+    <span class="token property">"root"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 找到这后，不再向上级目录寻找</span>
+    <span class="token comment">// 解析选项</span>
+    <span class="token property">"parserOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"ecmaVersion"</span><span class="token operator">:</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token comment">//  指定你想要使用的 ECMAScript 版本 3/5/6/7/8/9</span>
+        <span class="token property">"sourceType"</span><span class="token operator">:</span> <span class="token string">"module"</span><span class="token punctuation">,</span> <span class="token comment">// 'script'(default) or 'module'，标明你的代码是模块还是script</span>
+        <span class="token property">"ecmaFeatures"</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token comment">// 是否支持某些feature，默认均为false</span>
+            <span class="token property">"globalReturn"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//是否允许全局return</span>
+            <span class="token property">"impliedStrict"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//是否为全局严格模式</span>
+            <span class="token property">"jsx"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">//自定义解析器，官方支持下列四种，也可以自己定义解析器。</span>
+    <span class="token property">"parse"</span><span class="token operator">:</span> <span class="token string">"espree"</span> | <span class="token string">"esprima"</span> | <span class="token string">"Babel-ESLint"</span> | <span class="token string">"@typescript-eslint/parser"</span><span class="token punctuation">,</span>
+    <span class="token property">"plugins"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"a-plugin"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">//第三方 插件a</span>
+    <span class="token property">"processor"</span><span class="token operator">:</span> <span class="token string">"a-plugin/a-processor"</span><span class="token punctuation">,</span> <span class="token comment">// 制定处理器为插件a的处理器</span>
+    <span class="token property">"rules"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"eqeqeq"</span><span class="token operator">:</span> <span class="token string">"error"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 指定一些全局变量，类似于global.d.ts的作用</span>
+    <span class="token property">"globals"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"var1"</span><span class="token operator">:</span> <span class="token string">"writable"</span><span class="token punctuation">,</span>
+        <span class="token property">"var2"</span><span class="token operator">:</span> <span class="token string">"readonly"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">// 忽略哪些文件</span>
+    <span class="token property">"ignorePatterns"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"src/**/*.test.ts"</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>怎么生效的</h2><hr></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h2>AST</h2><hr><p><img src=./img/ast.png alt=AST></p></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h2>解析</h2><hr><p><a href=https://astexplorer.net/ target=_blank>在线AST解析工具</a></p><pre class=language-typescript><code class=language-typescript><span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token string">'foo'</span>
+<span class="token keyword">const</span> bar <span class="token operator">=</span> <span class="token string">'bar'</span>
+</code></pre><pre class=language-typescript><code class=language-typescript><span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> tsParser <span class="token operator">=</span> <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">'@typescript-eslint/parser'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span> SourceCode <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">require</span><span class="token punctuation">(</span><span class="token string">'eslint'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> filePath <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">'./test.ts'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> text <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">readFileSync</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span> <span class="token string">'utf8'</span><span class="token punctuation">)</span>
+<span class="token comment">// 编译成 AST</span>
+<span class="token keyword">const</span> ast <span class="token operator">=</span> tsParser<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  comment<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 创建包含所有注释的顶级注释数组</span>
+  ecmaVersion<span class="token operator">:</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token comment">// JS 版本</span>
+  <span class="token comment">// // 指定其他语言功能，</span>
+  <span class="token comment">// ecmaFeatures: {</span>
+  <span class="token comment">//     jsx: true, // 启用JSX解析</span>
+  <span class="token comment">//     globalReturn: true // 在全局范围内启用return（当sourceType为“commonjs”时自动设置为true）</span>
+  <span class="token comment">// },</span>
+  loc<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 将行/列位置信息附加到每个节点</span>
+  range<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// 将范围信息附加到每个节点</span>
+  tokens<span class="token operator">:</span> <span class="token boolean">true</span> <span class="token comment">// 创建包含所有标记的顶级标记数组</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> sourceCode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SourceCode</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> ast<span class="token punctuation">)</span>
+</code></pre></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>写个插件</h2><hr><p><a href=https://yeoman.io/ target=_blank>Yeoman</a> 是一个脚手架生成器，ESLint 使用它来简化新规则的开发。</p><p>一、安装</p><pre class=language-bash><code class=language-bash><span class="token function">npm</span> i -g yo generator-eslint
+</code></pre><p>二、创建一个新的Plugin</p><pre class=language-bash><code class=language-bash>yo eslint:plugin
+</code></pre><p>三、创建一个新的Rule</p><pre class=language-bash><code class=language-bash>yo eslint:rule
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>一个Demo</h3><p><a href=https://zh-hans.eslint.org/docs/latest/developer-guide/working-with-rules# target=_blank>官方文档</a></p><pre class=language-javascript><code class=language-javascript>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">meta</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">type</span><span class="token operator">:</span> <span class="token string">'problem'</span><span class="token punctuation">,</span> <span class="token comment">// `problem`, `suggestion`, or `layout`</span>
+    <span class="token literal-property property">docs</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">description</span><span class="token operator">:</span> <span class="token string">"test"</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">recommended</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">url</span><span class="token operator">:</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token comment">// URL to the documentation page for this rule</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">fixable</span><span class="token operator">:</span> <span class="token string">'code'</span><span class="token punctuation">,</span> <span class="token comment">// Or `code` or `whitespace`</span>
+    <span class="token literal-property property">schema</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">// Add a schema if the rule has options</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token function">create</span><span class="token punctuation">(</span><span class="token parameter">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">CallExpression</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">node</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">.</span>arguments<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+      node<span class="token punctuation">.</span>arguments<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">argNode<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        argNode<span class="token punctuation">.</span>type <span class="token operator">===</span> <span class="token string">"Literal"</span> <span class="token operator">&amp;&amp;</span> context<span class="token punctuation">.</span><span class="token function">report</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+          node<span class="token punctuation">,</span>
+          <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token string">'不能使用字面量作为函数的参数传入'</span><span class="token punctuation">,</span>
+          <span class="token function">fix</span><span class="token punctuation">(</span><span class="token parameter">fixer</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> val <span class="token operator">=</span> argNode<span class="token punctuation">.</span>raw<span class="token punctuation">;</span>
+            <span class="token keyword">const</span> statementString <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">const val</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>index<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>val<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">\n</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">[</span>
+              fixer<span class="token punctuation">.</span><span class="token function">replaceTextRange</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>arguments<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">.</span>range<span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">val</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>index<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              fixer<span class="token punctuation">.</span><span class="token function">insertTextBeforeRange</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>range<span class="token punctuation">,</span> statementString<span class="token punctuation">)</span>
+            <span class="token punctuation">]</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token comment">// visitor functions for different types of nodes</span>
+      CallExpression<span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+</code></pre></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>关注点</h3><hr><ol><li><code>create</code>方法</li><li><code>context</code>上下文对象</li><li><code>context.report</code>方法</li><li><code>fix</code>方法</li></ol><p>一条规则的校验逻辑：</p><p>通过遍历，我们到了某个 <code>AST</code> 节点，如果某个节点满足了我们所写的某条规则，我们进行 <code>report</code>，同时提供一个修复函数 <code>fix</code>，修复函数通过 <code>token</code> 或者 <code>range</code> 来决定对某处进行文本替换。</p></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h2>流程分析</h2><hr><h3>context上下文的形成</h3><p>创建了一个对象，然后提供了一些一些方法，供我们在插件中访问上下文使用，然后对于每个 rule 都在 createRuleListener 中都创建了一个 listener： <img src=./img/rule_listeners.png alt=""></p></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>report 方法</h3><hr><p>通过一系列的操作，往 lintingProblem 这个数组里面推了一个 problem。这个 problem 包含一些错误信息，AST 信息等等。 <img src=./img/report.png alt=""> <img src=./img/createProblem.png alt=""></p></div></section><section slide class="slide slide-left"><div class=wrap wrap=true><h3>fix 方法</h3><hr><p>使用 fix 中 replace 后的值，对源文本进行 slice 和 += 完成了修复动作。</p><p><img src=./img/attemptFix.png alt=""></p></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h3>总结</h3><hr><p><img src=./img/flow.png alt=""></p></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h2>参考</h2><ul><li><a href=https://zh-hans.eslint.org/docs/latest/user-guide/getting-started target=_blank>ESLint文档</a></li></ul></div></section><section slide class=slide :class="size-50 aligncenter"><div class="wrap size-50 aligncenter" wrap=true><h1 class="text-landing text-shadow">感谢聆听~</h1><p class=text-intro>By 黄种鑫</p></div></section></article></div><script>window.pluginsOptions = {}
+
+
+
+    window.webslidesOptions = {}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    let isPrintMode = false;
+    if(~location.search.indexOf('print-pdf')){
+        isPrintMode = true;
+        WebSlides.registerPlugin('scroll', function(){});
+    }
+    const wsOptions = {
+        loop: false
+    };
+    if(window.webslidesOptions){
+        for (let i in webslidesOptions){
+            if(webslidesOptions.hasOwnProperty(i)){
+                wsOptions[i] = webslidesOptions[i];
+            }
+        }
+    }
+    const ws = new WebSlides(wsOptions)
+
+    window.wsInstance = ws;
+    if(isPrintMode){
+        ws.slides.forEach(s=>s.show())
+    }
+}, false)</script><script src=./js/chunk-vendors.js></script><script src=./js/eslint-intro.js></script></body></html>
